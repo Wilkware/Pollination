@@ -110,8 +110,7 @@ class PollenCount extends IPSModule
         if ($update == true) {
             // DWD renew data always 11 o'clock
             $this->UpdateTimerInterval('UpdateTimer', 11, 15, 0);
-        }
-        else {
+        } else {
             $this->SetTimerInterval('UpdateTimer', 0);
         }
         // Debug
