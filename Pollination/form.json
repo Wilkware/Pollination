@@ -1,8 +1,8 @@
 {
   "elements":
   [
-    {"type": "Label", "label": "Pollen Danger Index for Germany issued by the German Weather Service (Deutscher Wetterdienst)"},
-    {"type": "Select", "name": "State", "caption": "State:", "onChange":"POLLEN_SelectState($id)",
+    {"type": "Label", "name": "LabelHeadline", "caption": "Pollen Danger Index for Germany issued by the German Weather Service (Deutscher Wetterdienst)"},
+    {"type": "Select", "name": "State", "caption": "State:", "onChange": "POLLEN_SelectState($id, $State);",
       "options": [
         ]
     },
@@ -26,6 +26,6 @@
   ],
   "actions":
   [
-    {"type": "Button","label": "Update","onClick": "POLLEN_Update($id);"}
+    {"type": "Button", "name": "Update", "caption": "Update index","onClick": "POLLEN_Update($id);"}
   ]
 }

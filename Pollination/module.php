@@ -10,6 +10,36 @@ class PollenCount extends IPSModule
     private static $dataURL = 'https://opendata.dwd.de/climate_environment/health/alerts/s31fg.json';
     // Jahreskalender URL
     private static $calURL = 'https://www.wetterdienst.de/imgs/pollenflugkalendar.jpg';
+    // Bundesländer (Regionen)
+    private static $regionIDs = [
+        ['caption' => 'Schleswig-Holstein und Hamburg', 'value' => 10],
+        ['caption' => 'Mecklenburg-Vorpommern ', 'value' => 20],
+        ['caption' => 'Niedersachsen und Bremen', 'value' => 30],
+        ['caption' => 'Nordrhein-Westfalen', 'value' => 40],
+        ['caption' => 'Brandenburg und Berlin ', 'value' => 50],
+        ['caption' => 'Sachsen-Anhalt', 'value' => 60],
+        ['caption' => 'Thüringen', 'value' => 70],
+        ['caption' => 'Sachsen', 'value' => 80],
+        ['caption' => 'Hessen', 'value' => 90],
+        ['caption' => 'Rheinland-Pfalz und Saarland', 'value' => 100],
+        ['caption' => 'Baden-Württemberg', 'value' => 110],
+        ['caption' => 'Bayern', 'value' => 120]
+    ];
+    // Teilgebiete (Parts)
+    private static $partIDs = [
+        10 =>  [['caption' => 'Inseln und Marschen', 'value' => 11], ['caption' => 'Geest, Schleswig-Holstein und Hamburg', 'value' => 12]],
+        20 =>  [['caption' => 'Mecklenburg-Vorpommern ', 'value' => -1]],
+        30 =>  [['caption' => 'Westl. Niedersachsen/Bremen', 'value' => 31], ['caption' => 'Östl. Niedersachsen', 'value' => 32]],
+        40 =>  [['caption' => 'Rhein.-Westfäl. Tiefland', 'value' => 41], ['caption' => 'Ostwestfalen', 'value' => 42],['caption' => 'Mittelgebirge NRW', 'value' => 43]],
+        50 =>  [['caption' => 'Brandenburg und Berlin ', 'value' => -1]],
+        60 =>  [['caption' => 'Tiefland Sachsen-Anhalt', 'value' => 61], ['caption' => 'Harz', 'value' => 62]],
+        70 =>  [['caption' => 'Tiefland Thüringen', 'value' => 71], ['caption' => 'Mittelgebirge Thüringen', 'value' => 72]],
+        80 =>  [['caption' => 'Tiefland Sachsen', 'value' => 81], ['caption' => 'Mittelgebirge Sachsen', 'value' => 82]],
+        90 =>  [['caption' => 'Nordhessen und hess. Mittelgebirge', 'value' => 91], ['caption' => 'Rhein-Main', 'value' => 92]],
+        100 => [['caption' => 'Saarland', 'value' => 103], ['caption' => 'Rhein, Pfalz, Nahe und Mosel', 'value' => 101], ['caption' => 'Mittelgebirgsbereich Rheinland-Pfalz', 'value' => 102]],
+        110 => [['caption' => 'Oberrhein und unteres Neckartal', 'value' => 111], ['caption' => 'Hohenlohe/mittlerer Neckar/Oberschwaben', 'value' => 112], ['caption' => 'Mittelgebirge Baden-Württemberg','value' => 113]],
+        120 => [['caption' => 'Allgäu/Oberbayern/Bay. Wald', 'value' => 121], ['caption' => 'Donauniederungen', 'value' => 122], ['caption' => 'Bayern n. der Donau, o. Bayr. Wald, o. Mainfranken', 'value' => 123], ['caption' => 'Mainfranken', 'value' => 124]]
+    ];
 
     /**
      * Create.
@@ -20,7 +50,7 @@ class PollenCount extends IPSModule
         parent::Create();
 
         $this->RegisterPropertyInteger('State', '10');
-        $this->RegisterPropertyInteger('Region', '10');
+        $this->RegisterPropertyInteger('Region', '11');
         $this->RegisterPropertyInteger('Days', 2);
         $this->RegisterPropertyBoolean('CreateHint', true);
         $this->RegisterPropertyBoolean('CreateForecast', true);
@@ -37,8 +67,13 @@ class PollenCount extends IPSModule
      */
     public function GetConfigurationForm()
     {
+        // first we read the preperated form data
         $form = json_decode(file_get_contents(__DIR__.'/form.json'), true);
-
+        // States (region_id)
+        $form['elements'][1]['options'] = self::$regionIDs;
+        // Regions (partregion_id)
+        $state = $this->ReadPropertyInteger('State');
+        $form['elements'][2]['options'] = self::$partIDs[$state];
         return json_encode($form);
     }
 
@@ -166,11 +201,11 @@ class PollenCount extends IPSModule
                 }
                 // Baue Html Tagestabelle ?
                 if ($forecast == true) {
-                    BuildHtml($pollination, $last);
+                    $this->BuildHtml($pollination, $last);
                 }
                 // Setze Tagesvorhersage ?
                 if ($hint == true) {
-                    BuildText($pollination);
+                    $this->BuildText($pollination);
                 }
                 break;
             }
@@ -182,9 +217,12 @@ class PollenCount extends IPSModule
         }
     }
 
-    public function SelectState()
+    public function SelectState($state)
     {
-        $this->UpdateFormField('Region', 'option', []);
+        
+        $value = json_encode(self::$partIDs[$state]);
+        $this->UpdateFormField('Region', 'value', $partIDs[$state][0]['value']);
+        $this->UpdateFormField('Region', 'option', $value);
     }
 
     private function BuildHtml($pollination, $time)
@@ -266,7 +304,7 @@ class PollenCount extends IPSModule
                 if ($index == $size - 1) {
                     $html = $html."<td class='lst th'>$key</td>";
                 } else {
-                    $html = $html."<td class='mid'>".GetScale($key, $value[$i]).'</td>';
+                    $html = $html."<td class='mid'>".$this->GetScale($key, $value[$i]).'</td>';
                 }
             }
             $html = $html.'</tr>';
