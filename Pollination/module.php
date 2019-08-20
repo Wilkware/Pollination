@@ -23,22 +23,22 @@ class PollenCount extends IPSModule
         ['caption' => 'Hessen', 'value' => 90],
         ['caption' => 'Rheinland-Pfalz und Saarland', 'value' => 100],
         ['caption' => 'Baden-Württemberg', 'value' => 110],
-        ['caption' => 'Bayern', 'value' => 120]
+        ['caption' => 'Bayern', 'value' => 120],
     ];
     // Teilgebiete (Parts)
     private static $partIDs = [
-        10 =>  [['caption' => 'Inseln und Marschen', 'value' => 11], ['caption' => 'Geest, Schleswig-Holstein und Hamburg', 'value' => 12]],
-        20 =>  [['caption' => 'Mecklenburg-Vorpommern ', 'value' => -1]],
-        30 =>  [['caption' => 'Westl. Niedersachsen/Bremen', 'value' => 31], ['caption' => 'Östl. Niedersachsen', 'value' => 32]],
-        40 =>  [['caption' => 'Rhein.-Westfäl. Tiefland', 'value' => 41], ['caption' => 'Ostwestfalen', 'value' => 42],['caption' => 'Mittelgebirge NRW', 'value' => 43]],
-        50 =>  [['caption' => 'Brandenburg und Berlin ', 'value' => -1]],
-        60 =>  [['caption' => 'Tiefland Sachsen-Anhalt', 'value' => 61], ['caption' => 'Harz', 'value' => 62]],
-        70 =>  [['caption' => 'Tiefland Thüringen', 'value' => 71], ['caption' => 'Mittelgebirge Thüringen', 'value' => 72]],
-        80 =>  [['caption' => 'Tiefland Sachsen', 'value' => 81], ['caption' => 'Mittelgebirge Sachsen', 'value' => 82]],
-        90 =>  [['caption' => 'Nordhessen und hess. Mittelgebirge', 'value' => 91], ['caption' => 'Rhein-Main', 'value' => 92]],
+        10  => [['caption' => 'Inseln und Marschen', 'value' => 11], ['caption' => 'Geest, Schleswig-Holstein und Hamburg', 'value' => 12]],
+        20  => [['caption' => 'Mecklenburg-Vorpommern ', 'value' => -1]],
+        30  => [['caption' => 'Westl. Niedersachsen/Bremen', 'value' => 31], ['caption' => 'Östl. Niedersachsen', 'value' => 32]],
+        40  => [['caption' => 'Rhein.-Westfäl. Tiefland', 'value' => 41], ['caption' => 'Ostwestfalen', 'value' => 42], ['caption' => 'Mittelgebirge NRW', 'value' => 43]],
+        50  => [['caption' => 'Brandenburg und Berlin ', 'value' => -1]],
+        60  => [['caption' => 'Tiefland Sachsen-Anhalt', 'value' => 61], ['caption' => 'Harz', 'value' => 62]],
+        70  => [['caption' => 'Tiefland Thüringen', 'value' => 71], ['caption' => 'Mittelgebirge Thüringen', 'value' => 72]],
+        80  => [['caption' => 'Tiefland Sachsen', 'value' => 81], ['caption' => 'Mittelgebirge Sachsen', 'value' => 82]],
+        90  => [['caption' => 'Nordhessen und hess. Mittelgebirge', 'value' => 91], ['caption' => 'Rhein-Main', 'value' => 92]],
         100 => [['caption' => 'Saarland', 'value' => 103], ['caption' => 'Rhein, Pfalz, Nahe und Mosel', 'value' => 101], ['caption' => 'Mittelgebirgsbereich Rheinland-Pfalz', 'value' => 102]],
-        110 => [['caption' => 'Oberrhein und unteres Neckartal', 'value' => 111], ['caption' => 'Hohenlohe/mittlerer Neckar/Oberschwaben', 'value' => 112], ['caption' => 'Mittelgebirge Baden-Württemberg','value' => 113]],
-        120 => [['caption' => 'Allgäu/Oberbayern/Bay. Wald', 'value' => 121], ['caption' => 'Donauniederungen', 'value' => 122], ['caption' => 'Bayern n. der Donau, o. Bayr. Wald, o. Mainfranken', 'value' => 123], ['caption' => 'Mainfranken', 'value' => 124]]
+        110 => [['caption' => 'Oberrhein und unteres Neckartal', 'value' => 111], ['caption' => 'Hohenlohe/mittlerer Neckar/Oberschwaben', 'value' => 112], ['caption' => 'Mittelgebirge Baden-Württemberg', 'value' => 113]],
+        120 => [['caption' => 'Allgäu/Oberbayern/Bay. Wald', 'value' => 121], ['caption' => 'Donauniederungen', 'value' => 122], ['caption' => 'Bayern n. der Donau, o. Bayr. Wald, o. Mainfranken', 'value' => 123], ['caption' => 'Mainfranken', 'value' => 124]],
     ];
 
     /**
@@ -74,6 +74,7 @@ class PollenCount extends IPSModule
         // Regions (partregion_id)
         $state = $this->ReadPropertyInteger('State');
         $form['elements'][2]['options'] = self::$partIDs[$state];
+
         return json_encode($form);
     }
 
@@ -219,7 +220,6 @@ class PollenCount extends IPSModule
 
     public function SelectState($state)
     {
-        
         $value = json_encode(self::$partIDs[$state]);
         $this->UpdateFormField('Region', 'value', $partIDs[$state][0]['value']);
         $this->UpdateFormField('Region', 'option', $value);
