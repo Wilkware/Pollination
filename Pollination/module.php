@@ -224,7 +224,7 @@ class PollenCount extends IPSModule
     {
         $value = json_encode(self::$partIDs[$state]);
         $this->UpdateFormField('Region', 'value', self::$partIDs[$state][0]['value']);
-        $this->UpdateFormField('Region', 'option', $value);
+        $this->UpdateFormField('Region', 'options', $value);
         $this->SendDebug('SelectState', 'state='.$state, 0);
     }
 
