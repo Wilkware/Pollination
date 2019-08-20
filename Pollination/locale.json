@@ -1,0 +1,21 @@
+{
+  "translations": {
+    "de": {
+      "Pollen Danger Index for Germany issued by the German Weather Service (Deutscher Wetterdienst)": "Pollenflug-Gefahrenindex für Deutschland ausgegeben vom Deutschen Wetterdienst",
+      "State:": "Bundesland:",
+      "Region:": "Region:",
+      "Number of days:": "Anzahl darzustellende Tage:",
+       "1 day": "1 Tag",
+       "2 days": "2 Tage",
+       "3 days": "3 Tage",
+       "Variable creation:": "Variablenerstellung:",
+       "Create variable for day note?": "Variable für Tageshinweis anlegen?",
+      "Create variable for graphical prediction?": "Variable für Graphische Vorhersage anlegen?",
+      "Create variable for image link on all german pollen count calendar?": "Variable für Bildlink auf gesamtdeutschen Pollenflugkalendar anlegen?",
+      "The following selection box activates or deactivates the daily update:": "Die nachfolgende Auswahlbox aktiviert bzw. deaktiviert die tägliche Aktualisierung:",
+      "Activate daily update?": "Tägliche Aktualisierung aktivieren?",
+
+      "Update index": "Index aktualisieren"
+    }
+  }
+}
