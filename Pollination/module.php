@@ -7,9 +7,9 @@ class PollenCount extends IPSModule
     use TimerHelper, DebugHelper;
 
     // JSON Daten URL
-    private $dataURL = 'https://opendata.dwd.de/climate_environment/health/alerts/s31fg.json';
+    private static $dataURL = 'https://opendata.dwd.de/climate_environment/health/alerts/s31fg.json';
     // Jahreskalender URL
-    private $calURL = 'https://www.wetterdienst.de/imgs/pollenflugkalendar.jpg';
+    private static $calURL = 'https://www.wetterdienst.de/imgs/pollenflugkalendar.jpg';
 
     /**
      * Create.
@@ -65,7 +65,7 @@ class PollenCount extends IPSModule
         $this->MaintainVariable('Link', 'Jahreskalender', vtString, '~HTMLBox', 2, $link);
         // Static content (link to image)
         if ($link == true) {
-            $this->SetValueString('Link', '<img src="'.static::$calURL.'" style="max-height: 100%; max-width: 100%;" \>');
+            $this->SetValueString('Link', '<img src="'.self::$calURL.'" style="max-height: 100%; max-width: 100%;" \>');
         }
         // Daily Update Calculate next update interval
         $update = $this->ReadPropertyBoolean('DailyUpdate');
@@ -122,7 +122,7 @@ class PollenCount extends IPSModule
     public function Update()
     {
         // Datenquelle
-        $json = file_get_contents(static::$dataURL);
+        $json = file_get_contents(self::$dataURL);
         // falls die Daten nicht geladen werden koennen
         if (empty($json) || $json == '') {
             $this->LogMessage('Fehler beim Auslesen des DWD Pollenflug-Gefahrenindex', KL_ERROR);
