@@ -1,6 +1,6 @@
 [![Version](https://img.shields.io/badge/Symcon-PHP--Modul-red.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
 [![Product](https://img.shields.io/badge/Symcon%20Version-5.2%20%3E-blue.svg)](https://www.symcon.de/produkt/)
-[![Version](https://img.shields.io/badge/Modul%20Version-1.0.20190825-orange.svg)](https://github.com/Wilkware/IPSymconPollination)
+[![Version](https://img.shields.io/badge/Modul%20Version-1.0.20190820-orange.svg)](https://github.com/Wilkware/IPSymconPollination)
 [![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 [![StyleCI](https://github.styleci.io/repos/203404838/shield?style=flat)](https://github.styleci.io/repos/203404838)
 
@@ -41,7 +41,7 @@ erzeugt über alle Meldungen einen kurzen Tageshinweis für die ensprechenden Ge
 
 ### 4. Einrichten der Instanzen in IP-Symcon
 
-* Unter "Instanz hinzufügen" ist das 'Pollen Count*-Modul (Alias: *Pollenflug*) unter dem Hersteller '(Sonstige)' aufgeführt.
+* Unter "Instanz hinzufügen" ist das 'Pollen Count*-Modul (Alias: *Pollenflug*) unter dem Hersteller '(Geräte)' aufgeführt.
 
 __Konfigurationsseite__:
 
@@ -82,7 +82,7 @@ Beispiel:
 
 ### 8. Versionshistorie
 
-v1.0.20190825
+v1.0.20190820
 
 * _NEU_: Initialversion (Migration vom Script *Online.Pollination.ips.php* v1.2.20181012).
 
