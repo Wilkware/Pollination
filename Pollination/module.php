@@ -58,6 +58,7 @@ class PollenCount extends IPSModule
         $this->RegisterPropertyBoolean('DailyUpdate', true);
         // Register daily update timer
         $this->RegisterTimer('UpdateTimer', 0, 'POLLEN_Update('.$this->InstanceID.');');
+        $this->SendDebug('Create', 'Init Properties', 0);
     }
 
     /**
@@ -74,6 +75,7 @@ class PollenCount extends IPSModule
         // Regions (partregion_id)
         $state = $this->ReadPropertyInteger('State');
         $form['elements'][2]['options'] = self::$partIDs[$state];
+        $this->SendDebug('GetConfigurationForm', 'state='.$state, 0);
 
         return json_encode($form);
     }
@@ -223,6 +225,7 @@ class PollenCount extends IPSModule
         $value = json_encode(self::$partIDs[$state]);
         $this->UpdateFormField('Region', 'value', self::$partIDs[$state][0]['value']);
         $this->UpdateFormField('Region', 'option', $value);
+        $this->SendDebug('SelectState', 'state='.$state, 0);
     }
 
     private function BuildHtml($pollination, $time)
