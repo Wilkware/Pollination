@@ -37,7 +37,7 @@ class PollenCount extends IPSModule
     */
     public function GetConfigurationForm()
     {
-        $jform = json_decode(file_get_contents(__DIR__ . '/form.json'), true);
+        $form = json_decode(file_get_contents(__DIR__ . '/form.json'), true);
         return json_encode($form);
     }
 
