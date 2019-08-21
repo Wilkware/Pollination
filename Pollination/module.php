@@ -227,7 +227,7 @@ class PollenCount extends IPSModule
      *
      * @param int $state The new selected state value.
      */
-    public function SelectState($state)
+    public function SelectState(int $state)
     {
         $value = json_encode(self::$partIDs[$state]);
         $this->UpdateFormField('Region', 'value', self::$partIDs[$state][0]['value']);
@@ -241,7 +241,7 @@ class PollenCount extends IPSModule
      * @param array $pollination Aarray of pollen count dates.
      * @param int   $time        Number of forecast days.
      */
-    private function BuildHtml($pollination, $time)
+    private function BuildHtml(array $pollination, int $time)
     {
         // Wochentage auf Deutsch
         $day = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
@@ -338,7 +338,7 @@ class PollenCount extends IPSModule
      *
      * @param array $pollination Aarray of pollen count dates.
      */
-    private function BuildText($pollination)
+    private function BuildText(array $pollination)
     {
         // Vorhersage für geringe Belastung
         $gb_text = '';
@@ -393,8 +393,11 @@ class PollenCount extends IPSModule
 
     /**
      * This function translate a numeric scale values into text.
+     * 
+     * @param string $type  Name of the plant.
+     * @param bool   $value Scale index of pollen count.
      */
-    private function GetScale($type, $value)
+    private function GetScale(string $type, int $value)
     {
         // Level
         $asso = ['-1'=>0, '0'=>1, '0-1'=>2, '1'=>3, '1-2'=>4, '2'=>5, '2-3'=>6, '3'=>7];
