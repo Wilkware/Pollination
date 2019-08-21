@@ -393,7 +393,7 @@ class PollenCount extends IPSModule
 
     /**
      * This function translate a numeric scale values into text.
-     * 
+     *
      * @param string $type  Name of the plant.
      * @param bool   $value Scale index of pollen count.
      */
