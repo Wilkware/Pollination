@@ -98,7 +98,7 @@ class PollenCount extends IPSModule
         // Variables
         $this->RegisterVariableInteger('LastUpdate', 'Letzte Aktualisierung', '~UnixTimestamp', 0);
         $this->RegisterVariableInteger('NextUpdate', 'Nächste Aktualisierung', '~UnixTimestamp', 1);
-        $this->MaintainVariable('Hint', 'Tageshinweis', vtString, '', 2, $hint);
+        $this->MaintainVariable('Hint', 'Tageshinweis', vtString, '~TextBox', 2, $hint);
         $this->MaintainVariable('Forecast', 'Vorhersage', vtString, '~HTMLBox', 2, $forecast);
         $this->MaintainVariable('Link', 'Jahreskalender', vtString, '~HTMLBox', 2, $link);
         // Static content (link to image)
@@ -158,7 +158,7 @@ class PollenCount extends IPSModule
      * This function will be available automatically after the module is imported with the module control.
      * Using the custom prefix this function will be callable from PHP and JSON-RPC through:.
      *
-     * ALMANAC_Update($id);
+     * POLLEN_Update($id);
      */
     public function Update()
     {
@@ -223,7 +223,12 @@ class PollenCount extends IPSModule
         }
     }
 
-    public function SelectState($state)
+    /**
+     * Execute when a user changes the selected option of the state dropdown.
+     * 
+     * @param integer $state The new selected state value.
+     */
+   public function SelectState($state)
     {
         $value = json_encode(self::$partIDs[$state]);
         $this->UpdateFormField('Region', 'value', self::$partIDs[$state][0]['value']);
@@ -231,6 +236,12 @@ class PollenCount extends IPSModule
         $this->SendDebug('SelectState', 'state='.$state, 0);
     }
 
+    /**
+     * Builds the HTML Table for the forecase.
+     * 
+     * @param array $pollination Aarray of pollen count dates.
+     * @param integer $time Number of forecast days.
+     */
     private function BuildHtml($pollination, $time)
     {
         // Wochentage auf Deutsch
@@ -325,6 +336,8 @@ class PollenCount extends IPSModule
 
     /**
      * This function creats the textual summary of the forecast.
+     * 
+     * @param array $pollination Aarray of pollen count dates.
      */
     private function BuildText($pollination)
     {

@@ -1,6 +1,6 @@
 [![Version](https://img.shields.io/badge/Symcon-PHP--Modul-red.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
 [![Product](https://img.shields.io/badge/Symcon%20Version-5.2%20%3E-blue.svg)](https://www.symcon.de/produkt/)
-[![Version](https://img.shields.io/badge/Modul%20Version-1.0.20190820-orange.svg)](https://github.com/Wilkware/IPSymconPollination)
+[![Version](https://img.shields.io/badge/Modul%20Version-1.0.20190821-orange.svg)](https://github.com/Wilkware/IPSymconPollination)
 [![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 [![StyleCI](https://github.styleci.io/repos/203404838/shield?style=flat)](https://github.styleci.io/repos/203404838)
 
@@ -82,7 +82,7 @@ Beispiel:
 
 ### 8. Versionshistorie
 
-v1.0.20190820
+v1.0.20190821
 
 * _NEU_: Initialversion (Migration vom Script *Online.Pollination.ips.php* v1.2.20181012).
 
