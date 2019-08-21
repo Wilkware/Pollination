@@ -6,8 +6,8 @@
 
 # Pollenflug
 
-Das Modul nutzt den von Deutschen Wetterdienst (DWD) bereitgestellten Pollenflug-Gefahrenindex (opendata.dwd.de) zur grapghisch Aufbereitung und  
-erzeugt über alle Meldungen einen kurzen Tageshinweis für die ensprechenden Gefahren.
+Das Modul nutzt den von Deutschen Wetterdienst (DWD) bereitgestellten Pollenflug-Gefahrenindex (opendata.dwd.de) zur graphischen Aufbereitung und  
+erzeugt über alle Meldungen einen kurzen Tageshinweis für die entsprechenden Gefahren.
 
 ## Inhaltverzeichnis
 
