@@ -12,17 +12,17 @@
     },
     {"type": "Select", "name": "Days", "caption": "Number of days:",
       "options": [
-        {"label": "1 day", "value": 1 },
-        {"label": "2 days", "value": 2 },
-        {"label": "3 days", "value": 3 }
+        {"label": "1 day", "value": 1},
+        {"label": "2 days", "value": 2},
+        {"label": "3 days", "value": 3}
       ]
     },
     {"type": "Label", "name": "LabelVariable", "caption": "Variable creation:"},
-    {"type": "CheckBox", "name": "CreateHint", "caption": "Create variable for day note?" },
-    {"type": "CheckBox", "name": "CreateForecast", "caption": "Create variable for graphical prediction?" },
-    {"type": "CheckBox", "name": "CreateLink", "caption": "Create variable for image link on all german pollen count calendar?" },
+    {"type": "CheckBox", "name": "CreateHint", "caption": "Create variable for day note?"},
+    {"type": "CheckBox", "name": "CreateForecast", "caption": "Create variable for graphical prediction?"},
+    {"type": "CheckBox", "name": "CreateLink", "caption": "Create variable for image link on all german pollen count calendar?"},
     {"type": "Label", "name": "LabelUpadate", "caption": "The following selection box activates or deactivates the daily update:"},
-    {"type": "CheckBox", "name": "DailyUpdate", "caption": "Activate daily update?" }
+    {"type": "CheckBox", "name": "DailyUpdate", "caption": "Activate daily update?"}
   ],
   "actions":
   [

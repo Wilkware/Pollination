@@ -3,10 +3,7 @@
   "name": "Pollen Count",
   "type": 3,
   "vendor": "",
-  "aliases":
-  [
-    "Pollenflug"
-  ],
+  "aliases": ["Pollenflug"],
   "parentRequirements": [],
   "childRequirements": [],
   "implemented": [],

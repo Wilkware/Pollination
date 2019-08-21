@@ -10,7 +10,7 @@ class PollenCount extends IPSModule
     private static $dataURL = 'https://opendata.dwd.de/climate_environment/health/alerts/s31fg.json';
     // Jahreskalender URL
     private static $calURL = 'https://www.wetterdienst.de/imgs/pollenflugkalendar.jpg';
-    // Bundesländer (Regionen)
+    // Bundesländer (Regions)
     private static $regionIDs = [
         ['caption' => 'Schleswig-Holstein und Hamburg', 'value' => 10],
         ['caption' => 'Mecklenburg-Vorpommern ', 'value' => 20],
