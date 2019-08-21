@@ -224,10 +224,10 @@ class PollenCount extends IPSModule
 
     /**
      * Execute when a user changes the selected option of the state dropdown.
-     * 
-     * @param integer $state The new selected state value.
+     *
+     * @param int $state The new selected state value.
      */
-   public function SelectState($state)
+    public function SelectState($state)
     {
         $value = json_encode(self::$partIDs[$state]);
         $this->UpdateFormField('Region', 'value', self::$partIDs[$state][0]['value']);
@@ -237,9 +237,9 @@ class PollenCount extends IPSModule
 
     /**
      * Builds the HTML Table for the forecase.
-     * 
+     *
      * @param array $pollination Aarray of pollen count dates.
-     * @param integer $time Number of forecast days.
+     * @param int   $time        Number of forecast days.
      */
     private function BuildHtml($pollination, $time)
     {
@@ -335,7 +335,7 @@ class PollenCount extends IPSModule
 
     /**
      * This function creats the textual summary of the forecast.
-     * 
+     *
      * @param array $pollination Aarray of pollen count dates.
      */
     private function BuildText($pollination)
