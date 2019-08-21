@@ -395,9 +395,9 @@ class PollenCount extends IPSModule
      * This function translate a numeric scale values into text.
      *
      * @param string $type  Name of the plant.
-     * @param bool   $value Scale index of pollen count.
+     * @param string $value Scale index of pollen count.
      */
-    private function GetScale(string $type, int $value)
+    private function GetScale(string $type, string $value)
     {
         // Level
         $asso = ['-1'=>0, '0'=>1, '0-1'=>2, '1'=>3, '1-2'=>4, '2'=>5, '2-3'=>6, '3'=>7];
