@@ -27,7 +27,7 @@ Dieses Modul ruft den Pollenflug-Gefahrenindex von DWD ab und stellt ihn textuel
 * Auswahl des gewüschten Bundeslandes
 * Auswahl der gewünschten Region
 * Auswahl der darzustellenden Tage (max. 3 Tage)
-* Einbindung des gesamtdeutschen Pollenflugkalendar (Bildlink)
+* Einbindung des gesamtdeutschen Pollenflugkalenders (Bildlink)
 * Tägliche Aktualisierung der Daten (siehe Einrichten der Instanz)
 
 ### 2. Voraussetzungen
@@ -53,7 +53,7 @@ Region                      | Auswahl der Teilregion innerhalb des Bundeslandes.
 Anzahl darzustellende Tage  | Anzahl der vorhergesagten Tage (1-3 Tage). **HINWEIS:** Viele Regionen liefern nur Daten für 2 Tage!
 Variable für Tageshinweis anlegen? | Schalter, ob der tägliche Tageshinweis (Text) angelegt und aktualisiert werden soll.
 Variable für Graphische Vorhersage anlegen? | Schalter, ob die graphische Vorhersage (HTMLBox) angelegt und aktualisiert werden soll.
-Variable für Bildlink auf gesamtdeutschen Pollenflugkalendar anlegen? | Schalter, ob ein statischer Link (HTMLBox) zum Übersichtsbild erzeugt werden soll.
+Variable für Bildlink auf gesamtdeutschen Pollenflugkalender anlegen? | Schalter, ob ein statischer Link (HTMLBox) zum Übersichtsbild erzeugt werden soll.
 Tägliche Aktualisierung aktivieren? | Schalter, ob das tägliche Update aktiv oder inaktiv ist. DWD aktualisiert die Daten immer 11:00 Uhr. Das Modul holt die Daten immer 15 Minuten später (11:15 Uhr) ab.
 
 ### 5. Statusvariablen und Profile
