@@ -356,14 +356,14 @@ class PollenCount extends IPSModule
         $css = $this->ReadPropertyString('tdm');
         $style = $style . '.pci td:not(:first-child):not(:last-child) ' . $css;
         $css = $this->ReadPropertyString('tdl');
-        $style = $style . '.pci td:last-child ' .$css;
+        $style = $style . '.pci td:last-child ' . $css;
         // DATE
         $css = $this->ReadPropertyString('day');
         $style = $style . '.day ' . $css;
         $css = $this->ReadPropertyString('num');
-        $style = $style . '.num ' .$css;
+        $style = $style . '.num ' . $css;
         $css = $this->ReadPropertyString('mon');
-        $style = $style . '.mon ' .$css;
+        $style = $style . '.mon ' . $css;
         // SCALE
         $style = $style . '.scale {clear:both;display: inline-block;width: 8px;height: 8px;margin-left: 2px; border: solid 1px rgba(255, 255, 255, 0.2)}';
         $style = $style . '.square1 { background-color: darkgreen;}';
