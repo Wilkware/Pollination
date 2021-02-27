@@ -1,11 +1,11 @@
 {
-  "id": "{3CF9CC0D-8C00-9FFC-FE7D-82CC65C69BE5}",
-  "name": "Pollen Count",
-  "type": 3,
-  "vendor": "",
-  "aliases": ["Pollenflug"],
-  "parentRequirements": [],
-  "childRequirements": [],
-  "implemented": [],
-  "prefix": "POLLEN"
+    "id": "{3CF9CC0D-8C00-9FFC-FE7D-82CC65C69BE5}",
+    "name": "Pollen Count",
+    "type": 3,
+    "vendor": "",
+    "aliases": ["Pollenflug"],
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "POLLEN"
 }
