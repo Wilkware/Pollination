@@ -25,15 +25,26 @@
         "Name of month [div.mon]:": "Monatsname [div.mon]:",
         "Advanced settings ...": "Erweiterte Einstellungen ...",
         "Create variable for day note?": "Variable für Tageshinweis anlegen?",
-        "Create variable for graphical prediction?": "Variable für Graphische Vorhersage anlegen?",
+        "Create variable for tabular prediction?": "Variable für tabellarische Vorhersage anlegen?",
         "Create variable for image link on all german pollen count calendar?": "Variable für Bildlink auf gesamtdeutschen Pollenflugkalendar anlegen?",
+        "Create variables for selecting the local and temporal settings (overrides module configuration)?": "Variablen für die Auswahl der lokalen und zeitlichen Einstellungen anlegen (überschreibt die Modulkonfiguration)?",
         "The following selection box activates or deactivates the daily update:": "Die nachfolgende Auswahlbox aktiviert bzw. deaktiviert die tägliche Aktualisierung:",
         "Activate daily update?": "Tägliche Aktualisierung aktivieren?",
         "Hazard index ...": "Gefahrenindex ...",
         "Update": "Aktualisieren",
+        "Last update": "Letzte Aktualisierung",
+        "Next update": "Nächste Aktualisierung",
+        "Daily Note": "Tageshinweis",
+        "Forecast": "Vorhersage", 
+        "Annual calendar": "Jahreskalender",
+        "State": "Bundesland",
+        "Region": "Region",
+        "Days": "Tage",
         "Error while reading the DWD pollen danger index!" : "Fehler beim Auslesen des DWD Pollenflug-Gefahrenindex!",
         "Error reading the last update!": "Fehler beim Auslesen der letzten Aktualisierung!",
-        "Error reading the next update!": "Fehler beim Auslesen der nächsten Aktualisierung!"
+        "Error reading the next update!": "Fehler beim Auslesen der nächsten Aktualisierung!",
+        "Source code, donation and licence ...": "Quellcode, Spende und Lizenz ...",
+        "The software is free of charge for non-commercial use, I would appreciate a donation if you like the module.": "Die Software ist für die nicht kommzerielle Nutzung kostenlos, über eine Spende bei Gefallen des Moduls würde ich mich sehr freuen."
     }
   }
 }

@@ -47,7 +47,7 @@ trait ProfileHelper
                     $this->RegisterProfileFloat($name, $icon, $prefix, $suffix, $minvalue, $maxvalue, $stepsize, $digits, $associations);
                     break;
                 case VARIABLETYPE_STRING:
-                    $this->RegisterProfileString($name, $icon);
+                    $this->RegisterProfileString($name, $icon, $prefix, $suffix, $associations);
                     break;
             }
         }
@@ -91,7 +91,7 @@ trait ProfileHelper
 
         if (($asso !== null) && (count($asso) !== 0)) {
             foreach ($asso as $ass) {
-                IPS_SetVariableProfileAssociation($name, $ass[0], $ass[1], $ass[2], $ass[3]);
+                IPS_SetVariableProfileAssociation($name, $ass[0], $this->Translate($ass[1]), $ass[2], $ass[3]);
             }
         }
     }
@@ -125,7 +125,7 @@ trait ProfileHelper
 
         if (($asso !== null) && (count($asso) !== 0)) {
             foreach ($asso as $ass) {
-                IPS_SetVariableProfileAssociation($name, $ass[0], $ass[1], $ass[2], $ass[3]);
+                IPS_SetVariableProfileAssociation($name, $ass[0], $this->Translate($ass[1]), $ass[2], $ass[3]);
             }
         }
     }
@@ -159,7 +159,7 @@ trait ProfileHelper
 
         if (($asso !== null) && (count($asso) !== 0)) {
             foreach ($asso as $ass) {
-                IPS_SetVariableProfileAssociation($name, $ass[0], $ass[1], $ass[2], $ass[3]);
+                IPS_SetVariableProfileAssociation($name, $ass[0], $this->Translate($ass[1]), $ass[2], $ass[3]);
             }
         }
     }
@@ -171,12 +171,18 @@ trait ProfileHelper
      * @param string $icon   Icon to display.
      * @param string $prefix Variable prefix.
      * @param string $suffix Variable suffix.
+     * @param array  $asso     Associations of the values.
      */
-    protected function RegisterProfileString($name, $icon, $prefix, $suffix)
+    protected function RegisterProfileString($name, $icon, $prefix, $suffix, $asso)
     {
         $this->RegisterProfileType($name, VARIABLETYPE_STRING);
 
         IPS_SetVariableProfileText($name, $prefix, $suffix);
         IPS_SetVariableProfileIcon($name, $icon);
+        if (($asso !== null) && (count($asso) !== 0)) {
+            foreach ($asso as $ass) {
+                IPS_SetVariableProfileAssociation($name, $ass[0], $this->Translate($ass[1]), $ass[2], $ass[3]);
+            }
+        }
     }
 }

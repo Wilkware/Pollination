@@ -3,9 +3,12 @@
     "name": "Pollen Count",
     "type": 3,
     "vendor": "",
-    "aliases": ["Pollenflug"],
+    "aliases": [
+        "Pollenflug"
+    ],
     "parentRequirements": [],
     "childRequirements": [],
     "implemented": [],
-    "prefix": "POLLEN"
+    "prefix": "POLLEN",
+    "url": "https://wilkware.de/ip-symcon-module/pollenflug/"
 }

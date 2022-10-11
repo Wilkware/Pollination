@@ -2,7 +2,7 @@
 
 [![Version](https://img.shields.io/badge/Symcon-PHP--Modul-red.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
 [![Product](https://img.shields.io/badge/Symcon%20Version-5.2%20%3E-blue.svg)](https://www.symcon.de/produkt/)
-[![Version](https://img.shields.io/badge/Modul%20Version-2.0.20210227-orange.svg)](https://github.com/Wilkware/IPSymconPollination)
+[![Version](https://img.shields.io/badge/Modul%20Version-3.0.20221007-orange.svg)](https://github.com/Wilkware/IPSymconPollination)
 [![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 [![Actions](https://github.com/Wilkware/IPSymconPollination/workflows/Check%20Style/badge.svg)](https://github.com/Wilkware/IPSymconPollination/actions)
 
@@ -46,17 +46,17 @@ index                 | array   | Belastung für die nächsten 3 Tage (siehe Leg
 
 ### 2. Voraussetzungen
 
-* IP-Symcon ab Version 5.2
+* IP-Symcon ab Version 6.0
 
 ### 3. Installation
 
-* Über den Modul Store das Modul *Pollenflug* installieren.
+* Über den Modul Store das Modul _Pollenflug_ installieren.
 * Alternativ Über das Modul-Control folgende URL hinzufügen.  
 `https://github.com/Wilkware/IPSymconPollination` oder `git://github.com/Wilkware/IPSymconPollination.git`
 
 ### 4. Einrichten der Instanzen in IP-Symcon
 
-* Unter "Instanz hinzufügen" ist das 'Pollen Count'-Modul (Alias: *Pollenflug*) unter dem Hersteller '(Geräte)' aufgeführt.
+* Unter "Instanz hinzufügen" ist das 'Pollen Count'-Modul (Alias: _Pollenflug_) unter dem Hersteller '(Geräte)' aufgeführt.
 
 __Konfigurationsseite__:
 
@@ -68,7 +68,7 @@ Name                        | Beschreibung
 --------------------------- | ---------------------------------
 Bundesland                  | Auswahl des Bundesland für welchen man die den Gefahrenindex haben möchte.
 Region                      | Auswahl der Teilregion innerhalb des Bundeslandes.
-Anzahl darzustellende Tage  | Anzahl der vorhergesagten Tage (1-3 Tage). **HINWEIS:** Viele Regionen liefern nur Daten für 2 Tage!
+Anzahl darzustellende Tage  | Anzahl der vorhergesagten Tage (1-3 Tage). HINWEIS: Viele Regionen liefern nur Daten für 2 Tage!
 
 > Formatvorlagen (CSS) ...
 
@@ -94,6 +94,7 @@ Name                                        | Beschreibung
 Variable für Tageshinweis anlegen?          | Schalter, ob der tägliche Tageshinweis (Text) angelegt und aktualisiert werden soll.
 Variable für Graphische Vorhersage anlegen? | Schalter, ob die graphische Vorhersage (HTMLBox) angelegt und aktualisiert werden soll.
 Variable für Bildlink auf gesamtdeutschen Pollenflugkalender anlegen? | Schalter, ob ein statischer Link (HTMLBox) zum Übersichtsbild erzeugt werden soll.
+Variablen für die Auswahl der lokalen und zeitlichen Einstellungen anlegen (überschreibt die Modulkonfiguration)?| Schalter, ob die zeitliche und rgionale Konfiguration über Statusvariablen im Webfront überschrieben werden dürfen.
 Tägliche Aktualisierung aktivieren?         | Schalter, ob das tägliche Update aktiv oder inaktiv ist. DWD aktualisiert die Daten immer 11:00 Uhr. Das Modul holt die Daten immer 15 Minuten später (11:15 Uhr) ab.
 
 Aktionsbereich:
@@ -115,6 +116,28 @@ Nächste Aktualisierung | Integer   | von DWD gelieferter Zeitstempel für die n
 Tageshinweis           | String    | Textuelle Zusammenfassung der Vorhersage
 Vorhersage             | String    | Graphische Repräsentation des Gefahrenindex in Abhängigkeit der gewählten darzustellenden Tage
 Jahreskalender         | String    | statischer Link zum Übersichtsbild
+Bundesland             | Integer   | Bundesland für welchen man die den Gefahrenindex haben möchte
+Region                 | Integer   | Teilregion innerhalb des Bundeslandes
+Tage                   | Integer   | Anzahl der vorhergesagten Tage
+
+Folgende Profile werden angelegt:
+
+Name                 | Typ       | Beschreibung
+-------------------- | --------- | ----------------
+POLLEN.States        | Integer   | Bundesländer (10 - 120)
+POLLEN.10            | Integer   | Regionen (11,12)
+POLLEN.20            | Integer   | Regionen (-1)
+POLLEN.30            | Integer   | Regionen (31,32)
+POLLEN.40            | Integer   | Regionen (41,42,43)
+POLLEN.50            | Integer   | Regionen (-1)
+POLLEN.60            | Integer   | Regionen (61,62)
+POLLEN.70            | Integer   | Regionen (71,72)
+POLLEN.80            | Integer   | Regionen (81,82)
+POLLEN.90            | Integer   | Regionen (91,92)
+POLLEN.100           | Integer   | Regionen (101,102,103)
+POLLEN.110           | Integer   | Regionen (111,112,113)
+POLLEN.120           | Integer   | Regionen (121,122,123,124)
+POLLEN.Days          | Integer   | 1, 2 oder 3 Tage
 
 ### 6. WebFront
 
@@ -157,6 +180,12 @@ __Beispiel__: `POLLEN_IndexInfo(12345);`
 
 ### 8. Versionshistorie
 
+v3.0.20221007
+
+* _NEU_: Örtliche und zeitliche Einstellungen per Webfront ermöglicht
+* _FIX_: Vereinheitlichungen des Konfigurationsformulars
+* _FIX_: Libs nachgezogen
+
 v2.0.20210227
 
 * _NEU_: Gefahrenindex kann als JSON Objekt abgerufen werden.
@@ -167,7 +196,7 @@ v2.0.20210227
 
 v1.0.20190821
 
-* _NEU_: Initialversion (Migration vom Script *Online.Pollination.ips.php* v1.2.20181012).
+* _NEU_: Initialversion (Migration vom Script _Online.Pollination.ips.php_ v1.2.20181012).
 
 ## Danksagung
 
@@ -176,14 +205,18 @@ Vielen Dank für die hervorragende und tolle Arbeit! Thanks!
 
 ## Entwickler
 
-* Heiko Wilknitz ([@wilkware](https://github.com/wilkware))
+Seit nunmehr über 10 Jahren fasziniert mich das Thema Haussteuerung. In den letzten Jahren betätige ich mich auch intensiv in der IP-Symcon Community und steuere dort verschiedenste Skript und Module bei. Ihr findet mich dort unter dem Namen @pitti ;-)
+
+[![GitHub](https://img.shields.io/badge/GitHub-@wilkware-181717.svg?style=for-the-badge&logo=github)](https://wilkware.github.io/)
 
 ## Spenden
 
-Die Software ist für die nicht kommerzielle Nutzung kostenlos, Schenkungen als Unterstützung für den Entwickler bitte hier:
+Die Software ist für die nicht kommerzielle Nutzung kostenlos, über eine Spende bei Gefallen des Moduls würde ich mich freuen.
 
-[![License](https://img.shields.io/badge/Einfach%20spenden%20mit-PayPal-blue.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8816166)
+[![PayPal](https://img.shields.io/badge/PayPal-spenden-00457C.svg?style=for-the-badge&logo=paypal)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8816166)
 
-### Lizenz
+## Lizenz
 
-[![Licence](https://licensebuttons.net/i/l/by-nc-sa/transparent/00/00/00/88x31-e.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+Namensnennung - Nicht-kommerziell - Weitergabe unter gleichen Bedingungen 4.0 International
+
+[![Licence](https://img.shields.io/badge/License-CC_BY--NC--SA_4.0-EF9421.svg?style=for-the-badge&logo=creativecommons)](https://creativecommons.org/licenses/by-nc-sa/4.0/)

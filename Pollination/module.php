@@ -7,50 +7,51 @@ require_once __DIR__ . '/../libs/_traits.php';  // Generell funktions
 // CLASS PollenCount
 class PollenCount extends IPSModule
 {
-    use ProfileHelper;
-    use EventHelper;
     use DebugHelper;
+    use EventHelper;
+    use ProfileHelper;
+    use VariableHelper;
 
     // JSON Data URL
-    const JSON = 'https://opendata.dwd.de/climate_environment/health/alerts/s31fg.json';
+    private const JSON = 'https://opendata.dwd.de/climate_environment/health/alerts/s31fg.json';
     // Almanac URL
-    const JPEG = 'https://www.wetterdienst.de/imgs/pollenflugkalendar.jpg';
+    private const JPEG = 'https://www.wetterdienst.de/imgs/pollenflugkalendar.jpg';
     // States (Bundesländer)
-    const STATES = [
-        ['caption' => 'Schleswig-Holstein und Hamburg', 'value' => 10],
-        ['caption' => 'Mecklenburg-Vorpommern ', 'value' => 20],
-        ['caption' => 'Niedersachsen und Bremen', 'value' => 30],
-        ['caption' => 'Nordrhein-Westfalen', 'value' => 40],
-        ['caption' => 'Brandenburg und Berlin ', 'value' => 50],
-        ['caption' => 'Sachsen-Anhalt', 'value' => 60],
+    private const STATES = [
+        ['caption' => 'Schleswig—Holstein und Hamburg', 'value' => 10],
+        ['caption' => 'Mecklenburg—Vorpommern ', 'value' => 20],
+        ['caption' => 'Niedersachsen und Bremen', 'value' => 30],
+        ['caption' => 'Nordrhein—Westfalen', 'value' => 40],
+        ['caption' => 'Brandenburg und Berlin ', 'value' => 50],
+        ['caption' => 'Sachsen—Anhalt', 'value' => 60],
         ['caption' => 'Thüringen', 'value' => 70],
         ['caption' => 'Sachsen', 'value' => 80],
         ['caption' => 'Hessen', 'value' => 90],
-        ['caption' => 'Rheinland-Pfalz und Saarland', 'value' => 100],
-        ['caption' => 'Baden-Württemberg', 'value' => 110],
+        ['caption' => 'Rheinland—Pfalz und Saarland', 'value' => 100],
+        ['caption' => 'Baden—Württemberg', 'value' => 110],
         ['caption' => 'Bayern', 'value' => 120],
     ];
     // Regions (Teilgebiete)
-    const REGIONS = [
-        10  => [['caption' => 'Inseln und Marschen', 'value' => 11], ['caption' => 'Geest, Schleswig-Holstein und Hamburg', 'value' => 12]],
+    private const REGIONS = [
+        10  => [['caption' => 'Inseln und Marschen', 'value' => 11], ['caption' => 'Geest, Schleswig-Holstein und Hamburg', 'value' => 12]],
         20  => [['caption' => 'Mecklenburg-Vorpommern ', 'value' => -1]],
-        30  => [['caption' => 'Westl. Niedersachsen/Bremen', 'value' => 31], ['caption' => 'Östl. Niedersachsen', 'value' => 32]],
-        40  => [['caption' => 'Rhein.-Westfäl. Tiefland', 'value' => 41], ['caption' => 'Ostwestfalen', 'value' => 42], ['caption' => 'Mittelgebirge NRW', 'value' => 43]],
-        50  => [['caption' => 'Brandenburg und Berlin ', 'value' => -1]],
-        60  => [['caption' => 'Tiefland Sachsen-Anhalt', 'value' => 61], ['caption' => 'Harz', 'value' => 62]],
-        70  => [['caption' => 'Tiefland Thüringen', 'value' => 71], ['caption' => 'Mittelgebirge Thüringen', 'value' => 72]],
-        80  => [['caption' => 'Tiefland Sachsen', 'value' => 81], ['caption' => 'Mittelgebirge Sachsen', 'value' => 82]],
-        90  => [['caption' => 'Nordhessen und hess. Mittelgebirge', 'value' => 91], ['caption' => 'Rhein-Main', 'value' => 92]],
-        100 => [['caption' => 'Saarland', 'value' => 103], ['caption' => 'Rhein, Pfalz, Nahe und Mosel', 'value' => 101], ['caption' => 'Mittelgebirgsbereich Rheinland-Pfalz', 'value' => 102]],
-        110 => [['caption' => 'Oberrhein und unteres Neckartal', 'value' => 111], ['caption' => 'Hohenlohe/mittlerer Neckar/Oberschwaben', 'value' => 112], ['caption' => 'Mittelgebirge Baden-Württemberg', 'value' => 113]],
-        120 => [['caption' => 'Allgäu/Oberbayern/Bay. Wald', 'value' => 121], ['caption' => 'Donauniederungen', 'value' => 122], ['caption' => 'Bayern n. der Donau, o. Bayr. Wald, o. Mainfranken', 'value' => 123], ['caption' => 'Mainfranken', 'value' => 124]],
+        30  => [['caption' => 'Westl. Niedersachsen/Bremen', 'value' => 31], ['caption' => 'Östl. Niedersachsen', 'value' => 32]],
+        40  => [['caption' => 'Rhein.-Westfäl. Tiefland', 'value' => 41], ['caption' => 'Ostwestfalen', 'value' => 42], ['caption' => 'Mittelgebirge NRW', 'value' => 43]],
+        50  => [['caption' => 'Brandenburg und Berlin ', 'value' => -1]],
+        60  => [['caption' => 'Tiefland Sachsen-Anhalt', 'value' => 61], ['caption' => 'Harz', 'value' => 62]],
+        70  => [['caption' => 'Tiefland Thüringen', 'value' => 71], ['caption' => 'Mittelgebirge Thüringen', 'value' => 72]],
+        80  => [['caption' => 'Tiefland Sachsen', 'value' => 81], ['caption' => 'Mittelgebirge Sachsen', 'value' => 82]],
+        90  => [['caption' => 'Nordhessen und hess. Mittelgebirge', 'value' => 91], ['caption' => 'Rhein-Main', 'value' => 92]],
+        100 => [['caption' => 'Saarland', 'value' => 103], ['caption' => 'Rhein, Pfalz, Nahe und Mosel', 'value' => 101], ['caption' => 'Mittelgebirgsbereich Rheinland-Pfalz', 'value' => 102]],
+        110 => [['caption' => 'Oberrhein und unteres Neckartal', 'value' => 111], ['caption' => 'Hohenlohe/mittlerer Neckar/Oberschwaben', 'value' => 112], ['caption' => 'Mittelgebirge Baden-Württemberg', 'value' => 113]],
+        120 => [['caption' => 'Allgäu/Oberbayern/Bay. Wald', 'value' => 121], ['caption' => 'Donauniederungen', 'value' => 122], ['caption' => 'Bayern n. der Donau, o. Bayr. Wald, o. Mainfranken', 'value' => 123], ['caption' => 'Mainfranken', 'value' => 124]],
     ];
     //Level (Scale to Level)
-    const LEVEL = [
+    private const LEVEL = [
         '-1' => 0, '0' => 1, '0-1'   => 2, '1' => 3, '1-2' => 4, '2' => 5, '2-3' => 6, '3' => 7,
     ];
     // Scale (Belastungsskala)
-    const SCALE = [
+    private const SCALE = [
         '#0' => 'nicht bekannt', '#1' => 'keine', '#2' => 'keine bis gering', '#3' => 'gering', '#4' => 'gering bis mittel', '#5' => 'mittel', '#6' => 'mittel bis hoch', '#7' => 'hoch',
     ];
 
@@ -82,7 +83,22 @@ class PollenCount extends IPSModule
         $this->RegisterPropertyBoolean('CreateHint', true);
         $this->RegisterPropertyBoolean('CreateForecast', true);
         $this->RegisterPropertyBoolean('CreateLink', true);
+        $this->RegisterPropertyBoolean('CreateSelect', false);
         $this->RegisterPropertyBoolean('DailyUpdate', true);
+        // Profiles
+        $states = [];
+        foreach (self::STATES as $state) {
+                $states[] = [$state['value'], $state['caption'], "", 0x800080];
+        }
+        $this->RegisterProfile(vtInteger, 'POLLEN.States', 'Macro', '', '', 0, 0, 0, 0, $states);
+        foreach (self::REGIONS as $state => $regions) {
+            $profil = [];
+            foreach ($regions as $region) {
+                $profil[] = [$region['value'], $region['caption'], "", -1];
+            }
+            $this->RegisterProfile(vtInteger, 'POLLEN.'. $state, 'Image', '', '', 0, 0, 0, 0, $profil);
+        }
+        $this->RegisterProfile(vtInteger, 'POLLEN.Days', 'Calendar', '', '', 1, 3, 1, 0);
         // Register daily update timer
         $this->RegisterTimer('UpdateTimer', 0, 'POLLEN_Update(' . $this->InstanceID . ');');
         $this->SendDebug('Create', 'Init Properties', 0);
@@ -121,12 +137,29 @@ class PollenCount extends IPSModule
         $hint = $this->ReadPropertyBoolean('CreateHint');
         $forecast = $this->ReadPropertyBoolean('CreateForecast');
         $link = $this->ReadPropertyBoolean('CreateLink');
+        $select = $this->ReadPropertyBoolean('CreateSelect');
         // Variables
-        $this->RegisterVariableInteger('LastUpdate', 'Letzte Aktualisierung', '~UnixTimestamp', 0);
-        $this->RegisterVariableInteger('NextUpdate', 'Nächste Aktualisierung', '~UnixTimestamp', 1);
-        $this->MaintainVariable('Hint', 'Tageshinweis', vtString, '~TextBox', 2, $hint);
-        $this->MaintainVariable('Forecast', 'Vorhersage', vtString, '~HTMLBox', 2, $forecast);
-        $this->MaintainVariable('Link', 'Jahreskalender', vtString, '~HTMLBox', 2, $link);
+        $this->RegisterVariableInteger('LastUpdate', $this->Translate('Last update'), '~UnixTimestamp', 0);
+        $this->RegisterVariableInteger('NextUpdate', $this->Translate('Next update'), '~UnixTimestamp', 1);
+        $this->MaintainVariable('Hint', $this->Translate('Tageshinweis'), vtString, '~TextBox', 2, $hint);
+        $this->MaintainVariable('Forecast', $this->Translate('Forecast'), vtString, '~HTMLBox', 2, $forecast);
+        $this->MaintainVariable('Link', $this->Translate('Annual calendar'), vtString, '~HTMLBox', 2, $link);
+        $this->MaintainVariable('State', $this->Translate('State'), vtInteger, 'POLLEN.States', 3, $select);
+        $this->MaintainVariable('Region', $this->Translate('Region'), vtInteger, 'POLLEN.10', 3, $select);
+        $this->MaintainVariable('Days', $this->Translate('Days'), vtInteger, 'POLLEN.Days', 3, $select);
+        if ($select) {
+            if($this->GetValue('State') == 0) {
+                $state = self::STATES[0]['value'];
+                $this->SetValueInteger('State', $state);
+                $this->SetValueInteger('Region', self::REGIONS[$state][0]['value']);
+            }
+            if($this->GetValue('Days') == 0) {
+                $this->SetValueInteger('Days', 2);
+            }
+            $this->EnableAction('State');
+            $this->EnableAction('Region');
+            $this->EnableAction('Days');
+        }
         // Static content (link to image)
         if ($link == true) {
             $this->SetValueString('Link', '<img src="' . self::JPEG . '" style="max-height: 100%; max-width: 100%;" \>');
@@ -157,8 +190,19 @@ class PollenCount extends IPSModule
         switch ($ident) {
             case 'OnSelectState':
                 $this->OnSelectState($value);
-            break;
-        }
+                break;
+            case 'State':
+                $vid = $this->GetIDForIdent('Region');
+                $vpn = "POLLEN.".$value;
+                IPS_SetVariableCustomProfile($vid, $vpn);
+                // automatisch erstes auswählen
+                $this->SetValueInteger('Region', self::REGIONS[$value][0]['value']);
+            case 'Region':
+            case 'Days':
+                $this->SetValueInteger($ident, $value);
+                $this->Update();
+                break;
+            }
         // return true;
     }
 
@@ -236,6 +280,10 @@ class PollenCount extends IPSModule
             // Collect index data
             $state = $this->ReadPropertyInteger('State');
             $region = $this->ReadPropertyInteger('Region');
+            if ($this->ReadPropertyBoolean('CreateSelect')) {
+                $state = $this->GetValue('State');
+                $region = $this->GetValue('Region');
+            }
             // search
             foreach ($data['content'] as $content) {
                 if (($content['region_id'] == $state) && ($content['partregion_id'] == $region)) {
@@ -274,42 +322,6 @@ class PollenCount extends IPSModule
         $this->UpdateFormField('Region', 'value', self::REGIONS[$state][0]['value']);
         $this->UpdateFormField('Region', 'options', $value);
         $this->SendDebug('OnSelectState', 'state=' . $state, 0);
-    }
-
-    /**
-     * Update a boolean value.
-     *
-     * @param string $Ident Ident of the boolean variable
-     * @param bool   $value Value of the boolean variable
-     */
-    private function SetValueBoolean(string $ident, bool $value)
-    {
-        $id = $this->GetIDForIdent($ident);
-        SetValueBoolean($id, $value);
-    }
-
-    /**
-     * Update a string value.
-     *
-     * @param string $Ident Ident of the boolean variable
-     * @param string $value Value of the string variable
-     */
-    private function SetValueString(string $ident, string $value)
-    {
-        $id = $this->GetIDForIdent($ident);
-        SetValueString($id, $value);
-    }
-
-    /**
-     * Update a integer value.
-     *
-     * @param string $Ident Ident of the boolean variable
-     * @param int    $value Value of the string variable
-     */
-    private function SetValueInteger(string $ident, int $value)
-    {
-        $id = $this->GetIDForIdent($ident);
-        SetValueInteger($id, $value);
     }
 
     /**
@@ -389,6 +401,9 @@ class PollenCount extends IPSModule
         $html = $html . '</tr></thead>';
         // Datenzeilen
         $days = $this->ReadPropertyInteger('Days');
+        if ($this->ReadPropertyBoolean('CreateSelect')) {
+            $days = $this->GetValue('Days');
+        }
         $st = $time;
         for ($i = 0; $i < $days; $i++) {
             // zeit

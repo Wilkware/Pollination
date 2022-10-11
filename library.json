@@ -1,9 +1,12 @@
 {
-  "id": "{0689F3AA-928D-5B86-3342-039A34D6BD19}",
-  "author": "Wilkware (@Pitti)",
-  "name": "Pollination",
-  "url": "https://github.com/Wilkware/",
-  "version": "2.0",
-  "build": 20210227,
-  "date": 1614423600
+    "id": "{0689F3AA-928D-5B86-3342-039A34D6BD19}",
+    "author": "Wilkware (@Pitti)",
+    "url": "https://wilkware.de",
+    "compatibility": {
+        "version": "6.0"
+    },
+    "name": "Pollination",
+    "version": "3.0",
+    "build": 20221007,
+    "date": 1665136800
 }
