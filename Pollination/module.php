@@ -88,15 +88,15 @@ class PollenCount extends IPSModule
         // Profiles
         $states = [];
         foreach (self::STATES as $state) {
-                $states[] = [$state['value'], $state['caption'], "", 0x800080];
+            $states[] = [$state['value'], $state['caption'], '', 0x800080];
         }
         $this->RegisterProfile(vtInteger, 'POLLEN.States', 'Macro', '', '', 0, 0, 0, 0, $states);
         foreach (self::REGIONS as $state => $regions) {
             $profil = [];
             foreach ($regions as $region) {
-                $profil[] = [$region['value'], $region['caption'], "", -1];
+                $profil[] = [$region['value'], $region['caption'], '', -1];
             }
-            $this->RegisterProfile(vtInteger, 'POLLEN.'. $state, 'Image', '', '', 0, 0, 0, 0, $profil);
+            $this->RegisterProfile(vtInteger, 'POLLEN.' . $state, 'Image', '', '', 0, 0, 0, 0, $profil);
         }
         $this->RegisterProfile(vtInteger, 'POLLEN.Days', 'Calendar', '', '', 1, 3, 1, 0);
         // Register daily update timer
@@ -148,12 +148,12 @@ class PollenCount extends IPSModule
         $this->MaintainVariable('Region', $this->Translate('Region'), vtInteger, 'POLLEN.10', 3, $select);
         $this->MaintainVariable('Days', $this->Translate('Days'), vtInteger, 'POLLEN.Days', 3, $select);
         if ($select) {
-            if($this->GetValue('State') == 0) {
+            if ($this->GetValue('State') == 0) {
                 $state = self::STATES[0]['value'];
                 $this->SetValueInteger('State', $state);
                 $this->SetValueInteger('Region', self::REGIONS[$state][0]['value']);
             }
-            if($this->GetValue('Days') == 0) {
+            if ($this->GetValue('Days') == 0) {
                 $this->SetValueInteger('Days', 2);
             }
             $this->EnableAction('State');
@@ -193,16 +193,17 @@ class PollenCount extends IPSModule
                 break;
             case 'State':
                 $vid = $this->GetIDForIdent('Region');
-                $vpn = "POLLEN.".$value;
+                $vpn = 'POLLEN.' . $value;
                 IPS_SetVariableCustomProfile($vid, $vpn);
-                // automatisch erstes auswählen
+                // select the always the first
                 $this->SetValueInteger('Region', self::REGIONS[$value][0]['value']);
+                // FIXME: No break. Please add proper comment if intentional
             case 'Region':
             case 'Days':
                 $this->SetValueInteger($ident, $value);
                 $this->Update();
                 break;
-            }
+        }
         // return true;
     }
 
@@ -294,7 +295,7 @@ class PollenCount extends IPSModule
                         $pollination[$key] = [
                             self::LEVEL[$value['today']],
                             self::LEVEL[$value['tomorrow']],
-                            self::LEVEL[$value['dayafter_to']]
+                            self::LEVEL[$value['dayafter_to']],
                         ];
                     }
                     // sort by key
