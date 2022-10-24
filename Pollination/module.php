@@ -192,13 +192,14 @@ class PollenCount extends IPSModule
                 $this->OnSelectState($value);
                 break;
             case 'State':
-                $vid = $this->GetIDForIdent('Region');
                 $vpn = 'POLLEN.' . $value;
-                IPS_SetVariableCustomProfile($vid, $vpn);
+                $this->RegisterVariableInteger('Region', $this->Translate('Region'), $vpn, 4);
                 // select the always the first
                 $this->SetValueInteger('Region', self::REGIONS[$value][0]['value']);
+                // No break, because 'State' have also to set the value
                 // FIXME: No break. Please add proper comment if intentional
             case 'Region':
+                // No break, because 'Region' have also to set the value
             case 'Days':
                 $this->SetValueInteger($ident, $value);
                 $this->Update();
