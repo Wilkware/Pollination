@@ -197,7 +197,7 @@ class PollenCount extends IPSModule
                 // select the always the first
                 $this->SetValueInteger('Region', self::REGIONS[$value][0]['value']);
                 // No break, because 'State' have also to set the value
-                // FIXME: No break. Please add proper comment if intentional
+                // FIXME: No break. Add additional comment above this line if intentional!
             case 'Region':
                 // No break, because 'Region' have also to set the value
             case 'Days':
