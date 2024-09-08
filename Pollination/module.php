@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../libs/_traits.php';  // Generell funktions
 
-// CLASS PollenCount
+/**
+ * CLASS PollenCount
+ */
 class PollenCount extends IPSModule
 {
     use DebugHelper;
@@ -90,15 +92,15 @@ class PollenCount extends IPSModule
         foreach (self::STATES as $state) {
             $states[] = [$state['value'], $state['caption'], '', 0x800080];
         }
-        $this->RegisterProfile(vtInteger, 'POLLEN.States', 'Macro', '', '', 0, 0, 0, 0, $states);
+        $this->RegisterProfileInteger('POLLEN.States', 'Macro', '', '', 0, 0, 0, $states);
         foreach (self::REGIONS as $state => $regions) {
             $profil = [];
             foreach ($regions as $region) {
                 $profil[] = [$region['value'], $region['caption'], '', -1];
             }
-            $this->RegisterProfile(vtInteger, 'POLLEN.' . $state, 'Image', '', '', 0, 0, 0, 0, $profil);
+            $this->RegisterProfileInteger('POLLEN.' . $state, 'Image', '', '', 0, 0, 0, $profil);
         }
-        $this->RegisterProfile(vtInteger, 'POLLEN.Days', 'Calendar', '', '', 1, 3, 1, 0);
+        $this->RegisterProfileInteger('POLLEN.Days', 'Calendar', '', '', 1, 3, 1);
         // Register daily update timer
         $this->RegisterTimer('UpdateTimer', 0, 'POLLEN_Update(' . $this->InstanceID . ');');
         $this->SendDebug('Create', 'Init Properties', 0);
@@ -141,12 +143,12 @@ class PollenCount extends IPSModule
         // Variables
         $this->RegisterVariableInteger('LastUpdate', $this->Translate('Last update'), '~UnixTimestamp', 0);
         $this->RegisterVariableInteger('NextUpdate', $this->Translate('Next update'), '~UnixTimestamp', 1);
-        $this->MaintainVariable('Hint', $this->Translate('Tageshinweis'), vtString, '~TextBox', 2, $hint);
-        $this->MaintainVariable('Forecast', $this->Translate('Forecast'), vtString, '~HTMLBox', 2, $forecast);
-        $this->MaintainVariable('Link', $this->Translate('Annual calendar'), vtString, '~HTMLBox', 2, $link);
-        $this->MaintainVariable('State', $this->Translate('State'), vtInteger, 'POLLEN.States', 3, $select);
-        $this->MaintainVariable('Region', $this->Translate('Region'), vtInteger, 'POLLEN.10', 3, $select);
-        $this->MaintainVariable('Days', $this->Translate('Days'), vtInteger, 'POLLEN.Days', 3, $select);
+        $this->MaintainVariable('Hint', $this->Translate('Tageshinweis'), VARIABLETYPE_STRING, '~TextBox', 2, $hint);
+        $this->MaintainVariable('Forecast', $this->Translate('Forecast'), VARIABLETYPE_STRING, '~HTMLBox', 2, $forecast);
+        $this->MaintainVariable('Link', $this->Translate('Annual calendar'), VARIABLETYPE_STRING, '~HTMLBox', 2, $link);
+        $this->MaintainVariable('State', $this->Translate('State'), VARIABLETYPE_INTEGER, 'POLLEN.States', 3, $select);
+        $this->MaintainVariable('Region', $this->Translate('Region'), VARIABLETYPE_INTEGER, 'POLLEN.10', 3, $select);
+        $this->MaintainVariable('Days', $this->Translate('Days'), VARIABLETYPE_INTEGER, 'POLLEN.Days', 3, $select);
         if ($select) {
             if ($this->GetValue('State') == 0) {
                 $state = self::STATES[0]['value'];
@@ -197,7 +199,7 @@ class PollenCount extends IPSModule
                 // select the always the first
                 $this->SetValueInteger('Region', self::REGIONS[$value][0]['value']);
                 // No break, because 'State' have also to set the value
-                // FIXME: No break. Add additional comment above this line if intentional!
+                // No break. Add additional comment above this line if intentional!
             case 'Region':
                 // No break, because 'Region' have also to set the value
             case 'Days':

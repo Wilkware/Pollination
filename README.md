@@ -1,10 +1,10 @@
 # Pollenflug
 
-[![Version](https://img.shields.io/badge/Symcon-PHP--Modul-red.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
-[![Product](https://img.shields.io/badge/Symcon%20Version-5.2%20%3E-blue.svg)](https://www.symcon.de/produkt/)
-[![Version](https://img.shields.io/badge/Modul%20Version-3.0.20221007-orange.svg)](https://github.com/Wilkware/IPSymconPollination)
-[![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-[![Actions](https://github.com/Wilkware/IPSymconPollination/workflows/Check%20Style/badge.svg)](https://github.com/Wilkware/IPSymconPollination/actions)
+[![Version](https://img.shields.io/badge/Symcon-PHP--Modul-red.svg?style=flat-square)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
+[![Product](https://img.shields.io/badge/Symcon%20Version-6.4-blue.svg?style=flat-square)](https://www.symcon.de/produkt/)
+[![Version](https://img.shields.io/badge/Modul%20Version-3.0.20221007-orange.svg?style=flat-square)](https://github.com/Wilkware/Pollination)
+[![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg?style=flat-square)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+[![Actions](https://img.shields.io/github/actions/workflow/status/wilkware/Pollination/style.yml?branch=main&label=CheckStyle&style=flat-square)](https://github.com/Wilkware/Pollination/actions)
 
 Das Modul nutzt den von Deutschen Wetterdienst (DWD) bereitgestellten Pollenflug-Gefahrenindex (opendata.dwd.de) zur graphischen Aufbereitung und
 erzeugt über alle Meldungen einen kurzen Tageshinweis für die entsprechenden Gefahren.
@@ -16,7 +16,7 @@ erzeugt über alle Meldungen einen kurzen Tageshinweis für die entsprechenden G
 3. [Installation](#user-content-3-installation)
 4. [Einrichten der Instanzen in IP-Symcon](#user-content-4-einrichten-der-instanzen-in-ip-symcon)
 5. [Statusvariablen und Profile](#user-content-5-statusvariablen-und-profile)
-6. [WebFront](#user-content-6-webfront)
+6. [Visualisierung](#user-content-6-visualisierung)
 7. [PHP-Befehlsreferenz](#user-content-7-php-befehlsreferenz)
 8. [Versionshistorie](#user-content-8-versionshistorie)
 
@@ -46,17 +46,17 @@ index                 | array   | Belastung für die nächsten 3 Tage (siehe Leg
 
 ### 2. Voraussetzungen
 
-* IP-Symcon ab Version 6.0
+* IP-Symcon ab Version 6.4
 
 ### 3. Installation
 
 * Über den Modul Store das Modul _Pollenflug_ installieren.
 * Alternativ Über das Modul-Control folgende URL hinzufügen.  
-`https://github.com/Wilkware/IPSymconPollination` oder `git://github.com/Wilkware/IPSymconPollination.git`
+`https://github.com/Wilkware/Pollination` oder `git://github.com/Wilkware/Pollination.git`
 
 ### 4. Einrichten der Instanzen in IP-Symcon
 
-* Unter "Instanz hinzufügen" ist das 'Pollen Count'-Modul (Alias: _Pollenflug_) unter dem Hersteller '(Geräte)' aufgeführt.
+* Unter "Instanz hinzufügen" ist das _Pollenflug_-Modul unter dem Hersteller '(Geräte)' aufgeführt.
 
 __Konfigurationsseite__:
 
@@ -139,9 +139,9 @@ POLLEN.110           | Integer   | Regionen (111,112,113)
 POLLEN.120           | Integer   | Regionen (121,122,123,124)
 POLLEN.Days          | Integer   | 1, 2 oder 3 Tage
 
-### 6. WebFront
+### 6. Visualisierung
 
-Man kann die Statusvariablen direkt im WF verlinken.
+Man kann die Statusvariablen direkt in die Visualisierung verlinken.
 
 ### 7. PHP-Befehlsreferenz
 

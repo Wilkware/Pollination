@@ -1,11 +1,11 @@
 {
     "id": "{0689F3AA-928D-5B86-3342-039A34D6BD19}",
+    "name": "Pollination",
     "author": "Wilkware (@Pitti)",
     "url": "https://wilkware.de",
     "compatibility": {
-        "version": "6.0"
+        "version": "6.4"
     },
-    "name": "Pollination",
     "version": "3.0",
     "build": 20221007,
     "date": 1665136800
