@@ -7,7 +7,7 @@
  *
  * @package       traits
  * @author        Heiko Wilknitz <heiko@wilkware.de>
- * @copyright     2020 Heiko Wilknitz
+ * @copyright     2025 Heiko Wilknitz
  * @link          https://wilkware.de
  * @license       https://creativecommons.org/licenses/by-nc-sa/4.0/ CC BY-NC-SA 4.0
  */
@@ -26,8 +26,10 @@ trait EventHelper
      * @param int    $hour   Start hour.
      * @param int    $minute Start minute.
      * @param int    $second Start second.
+     *
+     * @return void
      */
-    protected function UpdateTimerInterval($ident, $hour, $minute, $second)
+    protected function UpdateTimerInterval(string $ident, int $hour, int $minute, int $second): void
     {
         $now = new DateTime();
         $target = new DateTime();
@@ -41,24 +43,27 @@ trait EventHelper
     /**
      * Creates a weekly schedule.
      *
-     * @param int    $id     Parent ID
-     * @param string $name   Schedule name
-     * @param string $ident  Internal identifier
-     * @param array  $datas Array with switch states
-     * @param int    $pos    Position (sort order)
-     * @return array ID of the existing schedule or of the new created schedule.
+     * @param int    $id     Parent ID.
+     * @param string $name   Schedule name.
+     * @param string $ident  Internal identifier.
+     * @param array<int,array{0:string,1:int,2:string}> $data Array with switch states.
+     * @param int    $pos    Position (sort order).
+     * @param string $icon   Icon name.
+     *
+     * @return int ID of the existing schedule or of the new created schedule.
      */
-    protected function CreateWeeklySchedule($id, $name, $ident, $datas, $pos = 0)
+    protected function CreateWeeklySchedule(int $id, string $name, string $ident, array $data, int $pos = 0, string $icon = 'calendar-clock'): int
     {
         $eid = @IPS_GetObjectIDByIdent($ident, $id);
         if ($eid === false) {
             $eid = IPS_CreateEvent(EVENTTYPE_SCHEDULE);
-            IPS_SetName($eid, $name);
+            IPS_SetName($eid, $this->Translate($name));
             IPS_SetIdent($eid, $ident);
             IPS_SetParent($eid, $id);
             IPS_SetPosition($eid, $pos);
-            foreach ($datas as $key => $value) {
-                IPS_SetEventScheduleAction($eid, $key, $value[0], $value[1], $value[2]);
+            IPS_SetIcon($eid, $icon);
+            foreach ($data as $key => $value) {
+                IPS_SetEventScheduleAction($eid, $key, $this->Translate($value[0]), $value[1], $value[2]);
             }
             // Mo - So (1 + 2 + 4 + 8 + 16 + 32 + 64) = 127; Mo - Fr (1 + 2 + 4 + 8 + 16) = 31; Sa + So (32 + 64) = 96
             IPS_SetEventScheduleGroup($eid, 0, 127);
@@ -71,32 +76,33 @@ trait EventHelper
     /**
      * Reads out the status of a desired weekly schedule event.
      *
-     * @param int $id Weekly schedule ID
-     * @param int $time Query time as system time
-     * @param bool $checkonly Check only slot
-     * @return array [
-     *   'ActionID' => 4 ==> Active state at the time of the query
-     *   'ActionName' => NAME ==> Status description at the time of the query
-     *   'CheckSysTime' => 1423986592 ==> Time for which the check was started
-     *   'CheckTime' => 15.02.2015 08:49:52 ==> Formatted check time
-     *   'StartSysTime' => 1423861200 ==> switching point where the ACTIVE STATE became active
-     *   'StartTime' => 13.02.2015 22:00:00 ==> Formatted starting point
-     *   'EndSysTime' => 1424034000 ==> switching point where the ACTIVE STATE is left
-     *   'EndTime' => 2/15/2015 10:00 PM ==> Formatted endpoint
-     *   'Period' => 172800 ==> Duration of the active state in seconds
-     *   'PeriodHours' => 48 ==> Formatted time HOURS
-     *   'PeriodMinutes' => 0 ==> Formatted duration MINUTES
-     *   'PeriodSeconds' => 0 ==> Formatted duration SECONDS
-     *   'PreviousActionID' => 2 ==> State of the BEFORE the current state
-     *   'PreviousActionName' => 2 middle class ==> state description of previous state
-     *   'NextActionID' => 3 ==> Status that the current status is removed from
-     *   'NextActionName' => 3-night shift ==> State description of future state
-     *   'WeekPlanID' => 15405 ==> ID of the weekly schedule
-     *   'WeekPlanName' => SHIFT PLAN TEST ==> Name of the weekly plan
-     *   'WeekPlanActiv' => 1 ==> State whether the weekly schedule is active or not
-     * ]
+     * @param int  $id        Weekly schedule ID.
+     * @param int  $time      Query time as system time.
+     * @param bool $checkonly Check only slot.
+     *
+     * @return array{
+     *     ActionID: int,               // Active state at the time of the query
+     *     ActionName: string,          // Status description at the time of the query
+     *     CheckSysTime: int,           // Time for which the check was started
+     *     CheckTime: string,           // Formatted check time
+     *     StartSysTime: int,           // switching point where the ACTIVE STATE became active
+     *     StartTime: string,           // Formatted starting point
+     *     EndSysTime: int,             // switching point where the ACTIVE STATE is left
+     *     EndTime: string,             // Formatted endpoint
+     *     Periode: int,                // Duration of the active state in seconds
+     *     PeriodeHours: int,           // Formatted time HOURS
+     *     PeriodeMinutes: int,         // Formatted duration MINUTES
+     *     PeriodeSeconds: int,         // Formatted duration SECONDS
+     *     PreviousActionID: int,       // State of the BEFORE the current state
+     *     PreviousActionName: string,  // middle class ==> state description of previous state
+     *     NextActionID: int,           // Status that the current status is removed from
+     *     NextActionName: string,      // State description of future state
+     *     WeekPlanID: int,             // ID of the weekly schedule
+     *     WeekPlanName: string,        // Name of the weekly plan
+     *     WeekPlanActiv: int           // State whether the weekly schedule is active or not
+     * }
      */
-    protected function GetWeeklyScheduleInfo($id, $time = null, $checkonly = false)
+    protected function GetWeeklyScheduleInfo(int $id, int $time = null, bool $checkonly = false): array
     {
         if ($time == null) {
             $time = time();
@@ -125,7 +131,7 @@ trait EventHelper
 
         $eid = IPS_GetEvent($id);
         if ($eid['EventType'] != EVENTTYPE_SCHEDULE) {
-            $this->SendDebug('GetWeeklyScheduleInfo', 'Bei der ID= ' . $id . ' handelt es sich um keinen Wochenplan !');
+            $this->SendDebug('GetWeeklyScheduleInfo', 'Bei der ID= ' . $id . ' handelt es sich um keinen Wochenplan !', 0);
             return $data;
         }
 
@@ -237,7 +243,7 @@ trait EventHelper
                         $prevEvent = $this->GetWeeklyScheduleInfo($id, $checkTime - 1, true);
                         $checkTime = $prevEvent['StartSysTime'];
 
-                        if (($data['PreviousActionID'] == 0) && ($prevEvent['ActionID'] != 0)) {
+                        if ($prevEvent['ActionID'] != 0) {
                             $data['PreviousActionID'] = $prevEvent['ActionID'];
                             $dayEventFound = true;
                         }
@@ -405,7 +411,7 @@ trait EventHelper
         $data['EndTime'] = date('d.m.Y H:i:s', $data['EndSysTime']);
 
         $data['Periode'] = $data['EndSysTime'] - $data['StartSysTime'];
-        $data['PeriodeHours'] = floor($data['Periode'] / 3600);
+        $data['PeriodeHours'] = intval(floor($data['Periode'] / 3600));
         $data['PeriodeMinutes'] = $data['Periode'] / 60 % 60;
         $data['PeriodeSeconds'] = $data['Periode'] % 60;
 
@@ -427,12 +433,13 @@ trait EventHelper
     }
 
     /**
-     * Versucht eine Semaphore zu setzen und wiederholt dies bei Misserfolg bis zu 100 mal.
+     * Attempts to set a semaphore and retries up to 100 times upon failure.
      *
-     * @param string $ident Ein String der den Lock bezeichnet.
-     * @return boolean TRUE bei Erfolg, FALSE bei Misserfolg.
+     * @param string $ident A string that identifies the lock.
+     *
+     * @return bool TRUE on success, FALSE on failure.
      */
-    private function SemaphoreEnter($ident)
+    private function SemaphoreEnter(string $ident): bool
     {
         for ($i = 0; $i < 100; $i++) {
             if (IPS_SemaphoreEnter(__CLASS__ . '.' . (string) $this->InstanceID . (string) $ident, 1)) {
@@ -445,11 +452,13 @@ trait EventHelper
     }
 
     /**
-     * Löscht eine Semaphore.
+     * Deletes a semaphore.
      *
-     * @param string $ident Ein String der den Lock bezeichnet.
+     * @param string $ident  A string that identifies the lock.
+     *
+     * @return void
      */
-    private function SemaphoreLeave($ident)
+    private function SemaphoreLeave(string $ident): void
     {
         IPS_SemaphoreLeave(__CLASS__ . '.' . (string) $this->InstanceID . (string) $ident);
     }

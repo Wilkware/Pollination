@@ -2,9 +2,9 @@
 
 [![Version](https://img.shields.io/badge/Symcon-PHP--Modul-red.svg?style=flat-square)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
 [![Product](https://img.shields.io/badge/Symcon%20Version-6.4-blue.svg?style=flat-square)](https://www.symcon.de/produkt/)
-[![Version](https://img.shields.io/badge/Modul%20Version-3.0.20221007-orange.svg?style=flat-square)](https://github.com/Wilkware/Pollination)
+[![Version](https://img.shields.io/badge/Modul%20Version-4.0.20260208-orange.svg?style=flat-square)](https://github.com/Wilkware/Pollination)
 [![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg?style=flat-square)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-[![Actions](https://img.shields.io/github/actions/workflow/status/wilkware/Pollination/style.yml?branch=main&label=CheckStyle&style=flat-square)](https://github.com/Wilkware/Pollination/actions)
+[![Actions](https://img.shields.io/github/actions/workflow/status/wilkware/Pollination/ci.yml?branch=main&label=CI&style=flat-square)](https://github.com/Wilkware/Pollination/actions)
 
 Das Modul nutzt den von Deutschen Wetterdienst (DWD) bereitgestellten Pollenflug-Gefahrenindex (opendata.dwd.de) zur graphischen Aufbereitung und
 erzeugt über alle Meldungen einen kurzen Tageshinweis für die entsprechenden Gefahren.
@@ -15,7 +15,7 @@ erzeugt über alle Meldungen einen kurzen Tageshinweis für die entsprechenden G
 2. [Voraussetzungen](#user-content-2-voraussetzungen)
 3. [Installation](#user-content-3-installation)
 4. [Einrichten der Instanzen in IP-Symcon](#user-content-4-einrichten-der-instanzen-in-ip-symcon)
-5. [Statusvariablen und Profile](#user-content-5-statusvariablen-und-profile)
+5. [Statusvariablen](#user-content-5-statusvariablen)
 6. [Visualisierung](#user-content-6-visualisierung)
 7. [PHP-Befehlsreferenz](#user-content-7-php-befehlsreferenz)
 8. [Versionshistorie](#user-content-8-versionshistorie)
@@ -27,75 +27,71 @@ Dieses Modul ruft den Pollenflug-Gefahrenindex von DWD ab und stellt ihn textuel
 * Auswahl des gewüschten Bundeslandes
 * Auswahl der gewünschten Region
 * Auswahl der darzustellenden Tage (max. 3 Tage)
-* Bearbeitung der Tabellen-Formatvorlagen (Stylesheets)
-* Einbindung des gesamtdeutschen Pollenflugkalenders (Bildlink)
+* Auswahl der darzustellenden Gefahren/Pollenarten
+* Meldungen an Visualisierung und/oder Meldungsdashboard ab einen bestimmten Gefahrenlevel
+* Möglichleit der Medieneinbindung von Pollenflugkalender(n) (www.pollenstuftung.de)
 * Tägliche Aktualisierung der Daten (siehe Einrichten der Instanz)
 
 Der Pollen-Gefahrenindex kann auch über die Methode [POLLEN_IndexInfo](#7-php-befehlsreferenz) als JSON abgerufen werden.
 
-Folgende Informationen stehen als key => value Paare zur Verfügung:
-
-Folgende Informationen stehen als key => value Paare zur Verfügung:
-
-Schlüssel(key)        | Typ     | Beschreibung
---------------------- | ------- | ----------------
-last                  | int     | Timestamp, letze Aktualisierung
-next                  | int     | Timestamp, nächaste Aktualisierung
-legend                | array   | #0-#7, textuelle Beschreibung der Belastungsstufen  
-index                 | array   | Belastung für die nächsten 3 Tage (siehe Legende)
-
 ### 2. Voraussetzungen
 
-* IP-Symcon ab Version 6.4
+* IP-Symcon ab Version 8.1
 
 ### 3. Installation
 
-* Über den Modul Store das Modul _Pollenflug_ installieren.
+* Über den Modul Store das Modul _Pollenflug_ bzw. _Pollination_ installieren.
 * Alternativ Über das Modul-Control folgende URL hinzufügen.  
 `https://github.com/Wilkware/Pollination` oder `git://github.com/Wilkware/Pollination.git`
 
 ### 4. Einrichten der Instanzen in IP-Symcon
 
-* Unter "Instanz hinzufügen" ist das _Pollenflug_-Modul unter dem Hersteller '(Geräte)' aufgeführt.
+* Unter "Instanz hinzufügen" ist das _Pollenflug_-Modul (_Pollination_) unter dem Hersteller '(Geräte)' aufgeführt.
 
 __Konfigurationsseite__:
 
 Einstellungsbereich:
 
-> Örtliche und zeitliche Einstellungen ...
+> 📆 Pollenflugkalender ...
+
+Name                                                          | Beschreibung
+------------------------------------------------------------- | ---------------------------------
+Gesamtdeutscher Pollenflugkalender (2016–2021)                | Aktiv, wird entsprechender Kalender als Bild (Medien) angelegt
+Pollenflugkalender für Norddeutschland (2016–2021)            | Aktiv, wird entsprechender Kalender als Bild (Medien) angelegt
+Pollenflugkalender für Mittel- und Ostdeutschland (2016–2021) | Aktiv, wird entsprechender Kalender als Bild (Medien) angelegt
+Pollenflugkalender für Süddeutschland (2016–2021)             | Aktiv, wird entsprechender Kalender als Bild (Medien) angelegt
+Pollenflugkalender für Westdeutschland (2016–2021)            | Aktiv, wird entsprechender Kalender als Bild (Medien) angelegt
+
+> ✨ Visualisierung ...
 
 Name                        | Beschreibung
 --------------------------- | ---------------------------------
-Bundesland                  | Auswahl des Bundesland für welchen man die den Gefahrenindex haben möchte.
-Region                      | Auswahl der Teilregion innerhalb des Bundeslandes.
-Anzahl darzustellende Tage  | Anzahl der vorhergesagten Tage (1-3 Tage). HINWEIS: Viele Regionen liefern nur Daten für 2 Tage!
+Ambrosia                    | Wenn Aktiv, wird dazugehöriger Gefahrindex in der Visualisierung angezeigt
+Beifuß                      | Wenn Aktiv, wird dazugehöriger Gefahrindex in der Visualisierung angezeigt
+Birke                       | Wenn Aktiv, wird dazugehöriger Gefahrindex in der Visualisierung angezeigt
+Erle                        | Wenn Aktiv, wird dazugehöriger Gefahrindex in der Visualisierung angezeigt
+Esche                       | Wenn Aktiv, wird dazugehöriger Gefahrindex in der Visualisierung angezeigt
+Gräser                      | Wenn Aktiv, wird dazugehöriger Gefahrindex in der Visualisierung angezeigt
+Hasel                       | Wenn Aktiv, wird dazugehöriger Gefahrindex in der Visualisierung angezeigt
+Roggen                      | Wenn Aktiv, wird dazugehöriger Gefahrindex in der Visualisierung angezeigt
 
-> Formatvorlagen (CSS) ...
+> 📢 Meldungsverwaltung ...
 
-Name                                                      | Beschreibung
---------------------------------------------------------- | ---------------------------------
-3D Farbverlauf für Tabellenkopf verwenden?                | Verwendet einen transparenten Gradienten zur 3D Darstellung
-Tabelle \[table\]                                         | Allgemeine Tabellenstyle (Schrift, Farbe, Hintergrund)
-Tabllenkopf \[thead\]                                     | Style des Tabellenkopfs (Schrift, Farbe, Hintergrund)
-Tabellenzellen \[th,td\]                                  | Allgemeiner Style für alle Zellen
-Letzte Zeile \[tr:last-child\]                            | Style für letzte Zeile (z.b: Rahmen links, rechts, unten)
-Alternierende Zeile \[tr:nth-child(even)\]                | Style für gerade Zeile (z.b: Hintergrundfarbe)
-Erste Zelle \[td:first-child\]                            | Style für erste Zelle einer Zeile (z.b: Rahmen links)
-Mittlere Zellen \[td:not(:first-child):not(:last-child)\] | Style für mittlere Zellen einer Zeile (z.b: keinen Rahmen)
-Letzte Zelle \[td:last-child\]                            | Style für letzte Zelle einer Zeile (z.b: Rahmen rechts)
-Wochentag \[div.day\]                                     | Style für den Wochentagsnamen
-Tag des Monats \[div.num\]                                | Style für den Monatstag (z.b. groß & farbig)
-Monatsname \[div.mon\]                                    | Style für den Monatsnamen (z.b. alles Grossbuschtaben)
+Name                               | Beschreibung
+---------------------------------- | ---------------------------------
+Meldung an Anzeige senden          | Auswahl ob Eintrag in die Meldungsverwaltung erfolgen soll oder nicht (Ja/Nein)
+Ab Stufe                           | Auswahl ab welcher Stufe (1-4) die Nachricht erfolgen soll
+Nachricht an Visualiserung senden  | Auswahl ob Push-Nachricht gesendet werden soll oder nicht (Ja/Nein)
+Ab Stufe                           | Auswahl ab welcher Stufe (1-4) die Meldung erfolgen soll
+Visualisierungs-Instanz            | ID der Visualisierung, an welches die Push-Nachrichten für Geburts-, Hochzeits- und Todestage gesendet werden soll (WebFront oder TileVisu Instanz)
+Meldsungsskript                    | Skript ID des Meldungsverwaltungsskripts, weiterführende Infos im Forum: [Meldungsanzeige im Webfront](https://community.symcon.de/t/meldungsanzeige-im-webfront/23473)
+
 
 > Erweiterte Einstellungen ...
 
 Name                                        | Beschreibung
 ------------------------------------------- | ---------------------------------
 Variable für Tageshinweis anlegen?          | Schalter, ob der tägliche Tageshinweis (Text) angelegt und aktualisiert werden soll.
-Variable für Graphische Vorhersage anlegen? | Schalter, ob die graphische Vorhersage (HTMLBox) angelegt und aktualisiert werden soll.
-Variable für Bildlink auf gesamtdeutschen Pollenflugkalender anlegen? | Schalter, ob ein statischer Link (HTMLBox) zum Übersichtsbild erzeugt werden soll.
-Variablen für die Auswahl der lokalen und zeitlichen Einstellungen anlegen (überschreibt die Modulkonfiguration)?| Schalter, ob die zeitliche und rgionale Konfiguration über Statusvariablen im Webfront überschrieben werden dürfen.
-Tägliche Aktualisierung aktivieren?         | Schalter, ob das tägliche Update aktiv oder inaktiv ist. DWD aktualisiert die Daten immer 11:00 Uhr. Das Modul holt die Daten immer 15 Minuten später (11:15 Uhr) ab.
 
 Aktionsbereich:
 
@@ -105,7 +101,7 @@ Aktion         | Beschreibung
 -------------- | ------------------------------------------------------------
 AKTUALISIEREN  | Ermittelt für das aktuelle Datum den Gefahrenindex (Update)
 
-### 5. Statusvariablen und Profile
+### 5. Statusvariablen
 
 Die Statusvariablen werden je nach Einstellung automatisch angelegt. Das Löschen einzelner kann zu Fehlfunktionen führen.
 
@@ -113,35 +109,15 @@ Name                   | Typ       | Beschreibung
 ---------------------- | --------- | ----------------
 Letzte Aktualisierung  | Integer   | von DWD gelieferter Zeitstempel der letzten Aktualisierung
 Nächste Aktualisierung | Integer   | von DWD gelieferter Zeitstempel für die nächste Aktualisierung
-Tageshinweis           | String    | Textuelle Zusammenfassung der Vorhersage
-Vorhersage             | String    | Graphische Repräsentation des Gefahrenindex in Abhängigkeit der gewählten darzustellenden Tage
-Jahreskalender         | String    | statischer Link zum Übersichtsbild
 Bundesland             | Integer   | Bundesland für welchen man die den Gefahrenindex haben möchte
 Region                 | Integer   | Teilregion innerhalb des Bundeslandes
 Tage                   | Integer   | Anzahl der vorhergesagten Tage
-
-Folgende Profile werden angelegt:
-
-Name                 | Typ       | Beschreibung
--------------------- | --------- | ----------------
-POLLEN.States        | Integer   | Bundesländer (10 - 120)
-POLLEN.10            | Integer   | Regionen (11,12)
-POLLEN.20            | Integer   | Regionen (-1)
-POLLEN.30            | Integer   | Regionen (31,32)
-POLLEN.40            | Integer   | Regionen (41,42,43)
-POLLEN.50            | Integer   | Regionen (-1)
-POLLEN.60            | Integer   | Regionen (61,62)
-POLLEN.70            | Integer   | Regionen (71,72)
-POLLEN.80            | Integer   | Regionen (81,82)
-POLLEN.90            | Integer   | Regionen (91,92)
-POLLEN.100           | Integer   | Regionen (101,102,103)
-POLLEN.110           | Integer   | Regionen (111,112,113)
-POLLEN.120           | Integer   | Regionen (121,122,123,124)
-POLLEN.Days          | Integer   | 1, 2 oder 3 Tage
+Tageshinweis           | String    | Textuelle Zusammenfassung der Vorhersage
+{Pollenflugkalender}   | Medien    | n-Bild(er) der aktivieren Pollenflugkalender (Gesamtdeutsch, Nord, West, Ost, Süd)
 
 ### 6. Visualisierung
 
-Man kann die Statusvariablen direkt in die Visualisierung verlinken.
+Man kann die gesamte Instanz direkt in die Visualisierung verlinken.
 
 ### 7. PHP-Befehlsreferenz
 
@@ -179,6 +155,20 @@ __Beispiel__: `POLLEN_IndexInfo(12345);`
 > }  
 
 ### 8. Versionshistorie
+
+v4.0.20260208
+
+* _NEU_: Umstellung auf IPSModuleStrict
+* _NEU_: Umstellung von Profilen auf Darstellungen
+* _NEU_: Modulversion wird in Quellcodesektion angezeigt
+* _NEU_: Projektumstrukturierung hin zu einer globalen CI/CD-Pipeline
+* _NEU_: Kompatibilität auf IPS 8.1 hoch gesetzt
+* _NEU_: Direkte Unterstützung der TileVisu, keine HTML-Boxen mehr
+* _NEU_: Senden von Nachrichten ab definiertem Gefahrenindex
+* _NEU_: Version der Pollenflugkalender nachgezogen und als echtes Bild(Medien) realisiert
+* _FIX_: Gefahrenindex wird jetzt korrekt abgebildet, konnte unter gewissen Umständen um eins zu niedrig gewesen sein
+* _FIX_: Übersetzungen vollständig nachgezogen
+* _FIX_: Bibliotheksfunktionen angeglichen
 
 v3.0.20221007
 

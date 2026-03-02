@@ -7,7 +7,7 @@
  *
  * @package       traits
  * @author        Heiko Wilknitz <heiko@wilkware.de>
- * @copyright     2020 Heiko Wilknitz
+ * @copyright     2025 Heiko Wilknitz
  * @link          https://wilkware.de
  * @license       https://creativecommons.org/licenses/by-nc-sa/4.0/ CC BY-NC-SA 4.0
  */
@@ -23,9 +23,11 @@ trait ProfileHelper
      * Create the profile for the given type with the passed name.
      *
      * @param string $name    Profil name.
-     * @param string $vartype Type of the variable.
+     * @param int    $vartype Type of the variable.
+     *
+     * @return void
      */
-    protected function RegisterProfileType($name, $vartype)
+    protected function RegisterProfileType(string $name, int $vartype): void
     {
         if (!IPS_VariableProfileExists($name)) {
             IPS_CreateVariableProfile($name, $vartype);
@@ -44,9 +46,11 @@ trait ProfileHelper
      * @param string $icon   Icon to display.
      * @param string $prefix Variable prefix.
      * @param string $suffix Variable suffix.
-     * @param array  $asso   Associations of the values.
+     * @param array<int,array{0:bool,1:string,2:string,3:int}> $asso Associations of the values.
+     *
+     * @return void
      */
-    protected function RegisterProfileBoolean($name, $icon, $prefix, $suffix, $asso = null)
+    protected function RegisterProfileBoolean(string $name, string $icon, string $prefix, string $suffix, array $asso = null): void
     {
         $this->RegisterProfileType($name, VARIABLETYPE_BOOLEAN);
 
@@ -63,16 +67,18 @@ trait ProfileHelper
     /**
      * Create a profile for integer values.
      *
-     * @param string $name     Profil name.
-     * @param string $icon     Icon to display.
-     * @param string $prefix   Variable prefix.
-     * @param string $suffix   Variable suffix.
-     * @param int    $minvalue Minimum value.
-     * @param int    $maxvalue Maximum value.
-     * @param int    $stepsize Increment.
-     * @param array  $asso     Associations of the values.
+     * @param string $name      Profil name.
+     * @param string $icon      Icon to display.
+     * @param string $prefix    Variable prefix.
+     * @param string $suffix    Variable suffix.
+     * @param int    $minvalue  Minimum value.
+     * @param int    $maxvalue  Maximum value.
+     * @param int    $stepsize  Increment.
+     * @param array<int,array{0:int,1:string,2:string,3:int}> $asso Associations of the values.
+     *
+     * @return void
      */
-    protected function RegisterProfileInteger($name, $icon, $prefix, $suffix, $minvalue, $maxvalue, $stepsize, $asso = null)
+    protected function RegisterProfileInteger(string $name, string $icon, string $prefix, string $suffix, int $minvalue, int $maxvalue, int $stepsize, array $asso = null): void
     {
         $this->RegisterProfileType($name, VARIABLETYPE_INTEGER);
 
@@ -98,9 +104,11 @@ trait ProfileHelper
      * @param int    $maxvalue Maximum value.
      * @param int    $stepsize Increment.
      * @param int    $digits   Decimal places.
-     * @param array  $asso     Associations of the values.
+     * @param array<int,array{0:float,1:string,2:string,3:int}> $asso Associations of the values.
+     *
+     * @return void
      */
-    protected function RegisterProfileFloat($name, $icon, $prefix, $suffix, $minvalue, $maxvalue, $stepsize, $digits, $asso = null)
+    protected function RegisterProfileFloat(string $name, string $icon, string $prefix, string $suffix, int $minvalue, int $maxvalue, int $stepsize, int $digits, array $asso = null): void
     {
         $this->RegisterProfileType($name, VARIABLETYPE_FLOAT);
 
@@ -123,16 +131,18 @@ trait ProfileHelper
      * @param string $icon   Icon to display.
      * @param string $prefix Variable prefix.
      * @param string $suffix Variable suffix.
-     * @param array  $asso     Associations of the values.
+     * @param array<int,array{0:string,1:string,2:string,3:int}> $asso Associations of the values.
+     *
+     * @return void
      */
-    protected function RegisterProfileString($name, $icon, $prefix, $suffix, $asso)
+    protected function RegisterProfileString(string $name, string $icon, string $prefix, string $suffix, array $asso): void
     {
         $this->RegisterProfileType($name, VARIABLETYPE_STRING);
 
         IPS_SetVariableProfileIcon($name, $icon);
         IPS_SetVariableProfileText($name, $prefix, $suffix);
 
-        if (($asso !== null) && (count($asso) !== 0)) {
+        if (count($asso) !== 0) {
             foreach ($asso as $ass) {
                 IPS_SetVariableProfileAssociation($name, $ass[0], $this->Translate($ass[1]), $ass[2], $ass[3]);
             }
@@ -143,9 +153,10 @@ trait ProfileHelper
      * Returns the used profile name of a variable
      *
      * @param int $id Variable ID
+     *
      * @return string Empty, or name of the profile
      */
-    protected function GetVariableProfile($id)
+    protected function GetVariableProfile(int $id): string
     {
         $variableProfileName = IPS_GetVariable($id)['VariableCustomProfile'];
         if ($variableProfileName == '') {
