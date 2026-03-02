@@ -87,15 +87,13 @@ Visualisierungs-Instanz            | ID der Visualisierung, an welches die Push-
 Meldsungsskript                    | Skript ID des Meldungsverwaltungsskripts, weiterführende Infos im Forum: [Meldungsanzeige im Webfront](https://community.symcon.de/t/meldungsanzeige-im-webfront/23473)
 
 
-> Erweiterte Einstellungen ...
+> ⚙️ Erweiterte Einstellungen ...
 
 Name                                        | Beschreibung
 ------------------------------------------- | ---------------------------------
 Variable für Tageshinweis anlegen?          | Schalter, ob der tägliche Tageshinweis (Text) angelegt und aktualisiert werden soll.
 
 Aktionsbereich:
-
-> Gefahrenindex ...
 
 Aktion         | Beschreibung
 -------------- | ------------------------------------------------------------
