@@ -516,7 +516,7 @@ class PollenCount extends IPSModuleStrict
             // Data
             $result = [
                 'update' => $data['last'] ?? 0,
-                'index' => $index
+                'index'  => $index
             ];
         } else {
             $this->LogDebug(__FUNCTION__, 'No index data available');
