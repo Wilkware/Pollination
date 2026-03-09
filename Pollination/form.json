@@ -133,7 +133,7 @@
                 }
             ]
         },
-                {
+        {
             "type": "ExpansionPanel",
             "caption": "📢 Message management ...",
             "items": [
@@ -302,8 +302,8 @@
         },
         {
             "type": "ExpansionPanel",
-           "caption": "🎗️ Source code, donation and licence ...",
-             "items": [
+            "caption": "🎗️ Source code, donation and licence ...",
+            "items": [
                 {
                     "type": "Label",
                     "caption": "The software is free of charge for non-commercial use, I would appreciate a donation if you like the module.",
