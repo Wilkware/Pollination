@@ -111,8 +111,8 @@
             text-transform: uppercase;
             gap: 4px;
             background: color-mix(in srgb, var(--accent-color) 10%, transparent);
-            padding: 10px;
-            border-radius: 8px;
+            padding: 4px;
+            border-radius: 5px;
             transition: all 0.3s ease;
             margin: 4px;
         }
@@ -143,9 +143,9 @@
             text-align: center;
             color: var(--accent-color);
             text-transform: uppercase;
-            gap: 10px;
+            gap: 4px;
             background: color-mix(in srgb, var(--accent-color) 10%, transparent);
-            padding: 10px;
+            padding: 4px;
             border-radius: 8px;
             transition: all 0.3s ease;
             margin: 4px;
@@ -156,11 +156,11 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 4px;
             transition: all 0.3s ease;
             background: color-mix(in srgb, var(--content-color) 3%, transparent);
-            padding: 8px;
-            border-radius: 8px;
+            padding: 4px;
+            border-radius: 5px;
             transition: all 0.3s ease;
             margin: 4px;
         }
@@ -198,17 +198,17 @@
             text-align: center;
             color: var(--accent-color);
             text-transform: uppercase;
-            gap: 10px;
+            gap: 4px;
             background: color-mix(in srgb, var(--accent-color) 10%, transparent);
-            padding: 10px;
-            border-radius: 8px;
+            padding: 4px;
+            border-radius: 5px;
             transition: all 0.3s ease;
             margin: 4px;
         }
 
         .forecast-grid.horizontal .pollen-label-header .pollen-icon {
-            width: 48px;
-            height: 48px;
+            width: 42px;
+            height: 42px;
         }
 
         .forecast-grid.horizontal .day-row {
@@ -242,8 +242,8 @@
             color: var(--accent-color);
             background: color-mix(in srgb, var(--accent-color) 10%, transparent);
             text-transform: uppercase;
-            padding: 10px;
-            border-radius: 8px;
+            padding: 4%;
+            border-radius: 5px;
             transition: all 0.3s ease;
             margin: 4px;
         }
@@ -258,10 +258,10 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 4px;
             background: color-mix(in srgb, var(--content-color) 3%, transparent);
-            padding: 10px;
-            border-radius: 8px;
+            padding: 4px;
+            border-radius: 5px;
             transition: all 0.3s ease;
             margin: 4px;
         }
@@ -273,8 +273,8 @@
         }
 
         .pollen-icon {
-            width: 48px;
-            height: 48px;
+            width: 42px;
+            height: 42px;
         }
 
         .pollen-indicator {
@@ -440,23 +440,22 @@
             date.setDate(date.getDate() + index);
 
             const today = new Date();
-            today.setHours(0, 0, 0, 0); // heutige Mitternacht
+            today.setHours(0, 0, 0, 0);
+
             const targetDate = new Date(date);
-            targetDate.setHours(0, 0, 0, 0); // Mitternacht des Zieltags
+            targetDate.setHours(0, 0, 0, 0);
 
-            // Prüfen, ob es heute ist
-            const isToday = today.getTime() === targetDate.getTime();
+            const diffDays = Math.round((targetDate - today) / 86400000);
 
-            // Label bestimmen
             let label;
-            if (isToday) {
+
+            if (diffDays === 0) {
                 label = translate('Today');
-            } else if (index === 1) {
+            } else if (diffDays === 1) {
                 label = translate('Tomorrow');
-            } else if (index === 2) {
+            } else if (diffDays === 2) {
                 label = translate('In 2 days');
             } else {
-                // Andernfalls Wochentag
                 label = translate(date.toLocaleDateString('en-US', { weekday: 'long' }));
             }
 
@@ -557,7 +556,7 @@
                     const mapping = pollenNameMapping[pollenKey];
                     const icon = mapping ? pollenIcons[mapping.icon] : '';
                     const displayName = mapping ? mapping.displayName : pollenKey;
-                    console.log('Pollen Icon:', pollenKey, '->', displayName);
+                    //console.log('Pollen Icon:', pollenKey, '->', displayName);
 
                     const label = document.createElement('div');
                     label.className = 'pollen-label';

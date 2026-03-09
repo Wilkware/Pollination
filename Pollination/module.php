@@ -58,6 +58,13 @@ class PollenCount extends IPSModuleStrict
     ];
 
     /**
+     * @var array<int,string> Scale (Belastungsskala)
+     */
+    private const SCALE = [
+        0 => 'keine', 1 => 'keine bis gering', 2 => 'gering', 3 => 'gering bis mittel', 4 => 'mittel', 5 => 'mittel bis hoch', 6 => 'hoch'
+    ];
+
+    /**
      * @var array<string|int,int> Level (Scale to Level)
      */
     private const LEVEL = [
@@ -450,6 +457,8 @@ class PollenCount extends IPSModuleStrict
             } else {
                 $this->LogMessage($this->Translate('Error reading the next update!'), KL_WARNING);
             }
+            // Legende
+            $index['legend'] = self::SCALE;
             // Collect index data
             $state = $this->GetValue('State');
             $region = $this->GetValue('Region');
@@ -521,7 +530,7 @@ class PollenCount extends IPSModuleStrict
         } else {
             $this->LogDebug(__FUNCTION__, 'No index data available');
         }
-
+        $this->LogDebug(__FUNCTION__, $result);
         return json_encode($result);
     }
 

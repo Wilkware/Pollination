@@ -2,7 +2,7 @@
 
 [![Version](https://img.shields.io/badge/Symcon-PHP--Modul-red.svg?style=flat-square)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
 [![Product](https://img.shields.io/badge/Symcon%20Version-6.4-blue.svg?style=flat-square)](https://www.symcon.de/produkt/)
-[![Version](https://img.shields.io/badge/Modul%20Version-4.0.20260208-orange.svg?style=flat-square)](https://github.com/Wilkware/Pollination)
+[![Version](https://img.shields.io/badge/Modul%20Version-4.0.20260309-orange.svg?style=flat-square)](https://github.com/Wilkware/Pollination)
 [![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg?style=flat-square)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 [![Actions](https://img.shields.io/github/actions/workflow/status/wilkware/Pollination/ci.yml?branch=main&label=CI&style=flat-square)](https://github.com/Wilkware/Pollination/actions)
 
@@ -29,7 +29,7 @@ Dieses Modul ruft den Pollenflug-Gefahrenindex von DWD ab und stellt ihn textuel
 * Auswahl der darzustellenden Tage (max. 3 Tage)
 * Auswahl der darzustellenden Gefahren/Pollenarten
 * Meldungen an Visualisierung und/oder Meldungsdashboard ab einen bestimmten Gefahrenlevel
-* Möglichleit der Medieneinbindung von Pollenflugkalender(n) (www.pollenstuftung.de)
+* Möglichleit der Medieneinbindung von Pollenflugkalender(n) (www.pollenstiftung.de)
 * Tägliche Aktualisierung der Daten (siehe Einrichten der Instanz)
 
 Der Pollen-Gefahrenindex kann auch über die Methode [POLLEN_IndexInfo](#7-php-befehlsreferenz) als JSON abgerufen werden.
@@ -139,20 +139,26 @@ __Beispiel__: `POLLEN_IndexInfo(12345);`
 > {  
 > "index": { "Roggen": [1,1,0], "Graeser": [1,1,0], "Beifuss": [1,1,0], "Ambrosia": [1,1,0], "Hasel": [6,7,0], "Esche": [1,1,0], "Erle": [7,7,0],"Birke": [1,1,0]},  
 > "legend": {  
-> "#7": "hoch",  
-> "#6": "mittel bis hoch",  
-> "#5": "mittel",  
-> "#4": "gering bis mittel",  
-> "#3": "gering",  
-> "#2": "keine bis gering",  
-> "#1": "keine",  
-> "#0": "nicht bekannt"  
+> 6: "hoch",  
+> 5": "mittel bis hoch",  
+> 4: "mittel",  
+> 3: "gering bis mittel",  
+> 2: "gering",  
+> 1: "keine bis gering",  
+> 0: "keine",  
 > },  
 > "next": 1614506400,  
 > "last": 1614420000  
 > }  
 
 ### 8. Versionshistorie
+
+v4.0.20260309
+
+* _FIX_: HTML optimiert (weniger Platzbedarf)
+* _FIX_: Fehler in Tageslabel gefixt
+* _FIX_: Legende wird wieder mit ausgeliefert (neues Format)
+* _FIX_: Rechtschreibfehler korriegiert
 
 v4.0.20260208
 
