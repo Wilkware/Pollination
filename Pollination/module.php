@@ -2,29 +2,37 @@
 
 declare(strict_types=1);
 
-// Generell funktions
+/** Generell funktions */
 require_once __DIR__ . '/../libs/_traits.php';
+
+/** Namespaced traits */
+use Wilkware\Pollination\DebugHelper;
+use Wilkware\Pollination\EventHelper;
+use Wilkware\Pollination\VariableHelper;
+use Wilkware\Pollination\VersionHelper;
 
 /**
  * CLASS PollenCount
  */
 class PollenCount extends IPSModuleStrict
 {
-    // Helper Traits
+    // -------------------------------------------------------------------------
+    // Traits
+    // -------------------------------------------------------------------------
+
     use DebugHelper;
     use EventHelper;
-    use ProfileHelper;
     use VariableHelper;
     use VersionHelper;
 
-    /**
-     * @var int Min IPS Object ID
-     */
+    // -------------------------------------------------------------------------
+    // Constants
+    // -------------------------------------------------------------------------
+
+    /** @var int Min IPS Object ID */
     private const IPS_MIN_ID = 10000;
 
-    /**
-     * @var string JSON Data URL
-     */
+    /** @var string JSON Data URL */
     private const JSON = 'https://opendata.dwd.de/climate_environment/health/alerts/s31fg.json';
 
     /**
@@ -38,9 +46,7 @@ class PollenCount extends IPSModuleStrict
         ['MediaWest',   'Pollen calendar for western Germany (2016–2021)',             'pollenwest',    'https://www.pollenstiftung.de/fileadmin/_processed_/e/a/csm_West_2023_kalendar_2016_2021_fuer_web_2014e79f08.jpg'],
     ];
 
-    /**
-     * @var string Pollenflugkalender URL
-     */
+    /** @var string Pollenflugkalender URL */
     //private const JPEG = 'https://www.wetterdienst.de/imgs/pollenflugkalendar.jpg';
 
     /**
@@ -57,16 +63,12 @@ class PollenCount extends IPSModuleStrict
         'ShowRye'     => 'Roggen',
     ];
 
-    /**
-     * @var array<int,string> Scale (Belastungsskala)
-     */
+    /** @var array<int,string> Scale (Belastungsskala) */
     private const SCALE = [
         0 => 'keine', 1 => 'keine bis gering', 2 => 'gering', 3 => 'gering bis mittel', 4 => 'mittel', 5 => 'mittel bis hoch', 6 => 'hoch'
     ];
 
-    /**
-     * @var array<string|int,int> Level (Scale to Level)
-     */
+    /** @var array<string|int,int> Level (Scale to Level) */
     private const LEVEL = [
         '0' => 0, '0-1' => 1, '1' => 2, '1-2' => 3, '2' => 4, '2-3' => 5, '3' => 6,
     ];
@@ -159,6 +161,10 @@ class PollenCount extends IPSModuleStrict
         'CONTENT_COLOR'       => -1,
         'PREFIX'              => '',
     ];
+
+    // -------------------------------------------------------------------------
+    // Methods
+    // -------------------------------------------------------------------------
 
     /**
      * In contrast to Construct, this function is called only once when creating the instance and starting IP-Symcon.

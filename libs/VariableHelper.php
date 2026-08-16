@@ -14,6 +14,10 @@
 
 declare(strict_types=1);
 
+/** @symcon-namespace */
+
+namespace Wilkware\Pollination;
+
 /**
  * Helper class for access satus variables.
  */
@@ -141,5 +145,43 @@ trait VariableHelper
         }
 
         return $ident;
+    }
+
+    /**
+     * Translate all specific values recursively inside a configuration array.
+     *
+     * @param array<string,mixed> $configuration Configuration structure
+     * @param string              $index         Index of the configuration array to translate
+     * @param string              $key           Key of the configuration array to translate
+     *
+     * @return array<string,mixed> Modified configuration array
+     */
+    protected function TranslatePresentation(array $configuration, ?string $index = null, ?string $key = null): array
+    {
+        // Case 1: JSON array of objects at a specific index (e.g. OPTIONS -> Caption)
+        if ($index !== null && $index !== '' && $key !== null && $key !== '' && array_key_exists($index, $configuration)) {
+            $template = json_decode($configuration[$index], true);
+            if (is_array($template)) {
+                foreach ($template as &$a) {
+                    if (isset($a[$key])) {
+                        $a[$key] = $this->Translate($a[$key]);
+                    }
+                }
+                unset($a);
+                $configuration[$index] = json_encode($template, JSON_UNESCAPED_UNICODE);
+            }
+        }
+
+        // Case 2: all "normal" string values on the top level translate (e.g. PREFIX, SUFFIX)
+        foreach ($configuration as $k => $v) {
+            if ($k === $index) {
+                continue; // was possibly already handled above as a JSON array
+            }
+            if (is_string($v) && $v !== '') {
+                $configuration[$k] = $this->Translate($v);
+            }
+        }
+
+        return $configuration;
     }
 }

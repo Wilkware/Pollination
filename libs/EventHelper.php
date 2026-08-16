@@ -14,6 +14,10 @@
 
 declare(strict_types=1);
 
+/** @symcon-namespace */
+
+namespace Wilkware\Pollination;
+
 /**
  * Helper trait to create timer and events.
  */
@@ -31,8 +35,8 @@ trait EventHelper
      */
     protected function UpdateTimerInterval(string $ident, int $hour, int $minute, int $second): void
     {
-        $now = new DateTime();
-        $target = new DateTime();
+        $now = new \DateTime();
+        $target = new \DateTime();
         $target->modify('+1 day');
         $target->setTime($hour, $minute, $second);
         $diff = $target->getTimestamp() - $now->getTimestamp();
@@ -102,7 +106,7 @@ trait EventHelper
      *     WeekPlanActiv: int           // State whether the weekly schedule is active or not
      * }
      */
-    protected function GetWeeklyScheduleInfo(int $id, int $time = null, bool $checkonly = false): array
+    protected function GetWeeklyScheduleInfo(int $id, ?int $time = null, bool $checkonly = false): array
     {
         if ($time == null) {
             $time = time();
@@ -196,7 +200,7 @@ trait EventHelper
                         }
                     }
                 }
-                $data['StartSysTime'] = mktime(00, 00, 00, intval(date('m', $time)), intval(date('d', $time)) + 1 - $i, intval(date('Y', $time)));
+                $data['StartSysTime'] = mktime(0, 0, 0, intval(date('m', $time)), intval(date('d', $time)) + 1 - $i, intval(date('Y', $time)));
             }
 
             for ($i = 0; $i <= 6; $i++) {
@@ -213,8 +217,8 @@ trait EventHelper
                 $data['StartSysTime'] = $time;
             }
 
-            $data['CheckSysTime'] = mktime(00, 00, 00, intval(date('m', $time)), intval(date('d', $time)) - 1 + $i, intval(date('Y', $time)));
-            $data['EndSysTime'] = mktime(00, 00, 00, intval(date('m', $time)), intval(date('d', $time)) - 1 + $i, intval(date('Y', $time)));
+            $data['CheckSysTime'] = mktime(0, 0, 0, intval(date('m', $time)), intval(date('d', $time)) - 1 + $i, intval(date('Y', $time)));
+            $data['EndSysTime'] = mktime(0, 0, 0, intval(date('m', $time)), intval(date('d', $time)) - 1 + $i, intval(date('Y', $time)));
             $endPointFound = false;
         }
 
@@ -257,9 +261,9 @@ trait EventHelper
                     $prevEvent = $this->GetWeeklyScheduleInfo($id, $data['StartSysTime'] - 1, true);
 
                     if (($prevEvent['ActionID'] == 0) && ($prevEvent['PreviousActionID'] == 0) && ($prevEvent['NextActionID'] == 0)) {
-                        $data['StartSysTime'] = mktime(00, 00, 00, intval(date('m', $prevEvent['StartSysTime'])), intval(date('d', $prevEvent['StartSysTime'])), intval(date('Y', $prevEvent['StartSysTime'])));
-                    } elseif (($prevEvent['NextActionID'] == 0) && ($prevEvent['PreviousActionID'] == 0) && ($data['ActionID'] == $prevEvent['ActionID'])) {
-                        $data['StartSysTime'] = mktime(00, 00, 00, intval(date('m', $prevEvent['StartSysTime'])), intval(date('d', $prevEvent['StartSysTime'])), intval(date('Y', $prevEvent['StartSysTime'])));
+                        $data['StartSysTime'] = mktime(0, 0, 0, intval(date('m', $prevEvent['StartSysTime'])), intval(date('d', $prevEvent['StartSysTime'])), intval(date('Y', $prevEvent['StartSysTime'])));
+                    } elseif ($data['ActionID'] == $prevEvent['ActionID']) {
+                        $data['StartSysTime'] = mktime(0, 0, 0, intval(date('m', $prevEvent['StartSysTime'])), intval(date('d', $prevEvent['StartSysTime'])), intval(date('Y', $prevEvent['StartSysTime'])));
                     } else {
                         $data['StartSysTime'] = $prevEvent['StartSysTime'];
                         $data['PreviousActionID'] = $prevEvent['ActionID'];
@@ -284,7 +288,7 @@ trait EventHelper
                     do {
                         $prevEvent = $this->GetWeeklyScheduleInfo($id, $checkTime - 1, true);
                         if (($prevEvent['ActionID'] == 0) && ($prevEvent['PreviousActionID'] == 0) && ($prevEvent['NextActionID'] == 0)) {
-                            $checkTime = mktime(00, 00, 00, intval(date('m', $prevEvent['StartSysTime'])), intval(date('d', $prevEvent['StartSysTime'])), intval(date('Y', $prevEvent['StartSysTime'])));
+                            $checkTime = mktime(0, 0, 0, intval(date('m', $prevEvent['StartSysTime'])), intval(date('d', $prevEvent['StartSysTime'])), intval(date('Y', $prevEvent['StartSysTime'])));
                         } else {
                             $checkTime = $prevEvent['StartSysTime'];
                         }
@@ -305,9 +309,7 @@ trait EventHelper
                     $prevEvent = $this->GetWeeklyScheduleInfo($id, $checkTime - 1, true);
 
                     if (($prevEvent['ActionID'] == 0) && ($prevEvent['PreviousActionID'] == 0) && ($prevEvent['NextActionID'] == 0)) {
-                        $checkTime = mktime(00, 00, 00, intval(date('m', $prevEvent['StartSysTime'])), intval(date('d', $prevEvent['StartSysTime'])), intval(date('Y', $prevEvent['StartSysTime'])));
-                    } elseif (($prevEvent['NextActionID'] == 0) && ($prevEvent['PreviousActionID'] == 0)) {
-                        $checkTime = mktime(00, 00, 00, intval(date('m', $prevEvent['StartSysTime'])), intval(date('d', $prevEvent['StartSysTime'])), intval(date('Y', $prevEvent['StartSysTime'])));
+                        $checkTime = mktime(0, 0, 0, intval(date('m', $prevEvent['StartSysTime'])), intval(date('d', $prevEvent['StartSysTime'])), intval(date('Y', $prevEvent['StartSysTime'])));
                     } else {
                         $checkTime = $prevEvent['StartSysTime'];
 
@@ -328,8 +330,6 @@ trait EventHelper
                     $nextEvent = $this->GetWeeklyScheduleInfo($id, $checkTime, true);
 
                     if (($nextEvent['ActionID'] == 0) && ($nextEvent['PreviousActionID'] == 0) && ($nextEvent['NextActionID'] == 0)) {
-                        $checkTime = mktime(0, 0, 0, intval(date('m', $nextEvent['StartSysTime'])), intval(date('d', $nextEvent['StartSysTime'])) + 1, intval(date('Y', $nextEvent['StartSysTime'])));
-                    } elseif (($nextEvent['NextActionID'] == 0) && ($nextEvent['PreviousActionID'] == 0)) {
                         $checkTime = mktime(0, 0, 0, intval(date('m', $nextEvent['StartSysTime'])), intval(date('d', $nextEvent['StartSysTime'])) + 1, intval(date('Y', $nextEvent['StartSysTime'])));
                     } else {
                         $checkTime = $nextEvent['EndSysTime'];
@@ -356,8 +356,6 @@ trait EventHelper
 
                     if (($nextEvent['ActionID'] == 0) && ($nextEvent['PreviousActionID'] == 0) && ($nextEvent['NextActionID'] == 0)) {
                         $data['EndSysTime'] = mktime(0, 0, 0, intval(date('m', $nextEvent['StartSysTime'])), intval(date('d', $nextEvent['StartSysTime'])) + 1, intval(date('Y', $nextEvent['StartSysTime'])));
-                    } elseif (($nextEvent['NextActionID'] == 0) && ($nextEvent['PreviousActionID'] == 0)) {
-                        $data['EndSysTime'] = mktime(0, 0, 0, intval(date('m', $nextEvent['StartSysTime'])), intval(date('d', $nextEvent['StartSysTime'])) + 1, intval(date('Y', $nextEvent['StartSysTime'])));
                     } else {
                         $data['EndSysTime'] = $nextEvent['StartSysTime'];
                         $data['NextActionID'] = $nextEvent['ActionID'];
@@ -382,8 +380,6 @@ trait EventHelper
                         $nextEvent = $this->GetWeeklyScheduleInfo($id, $checkTime, true);
 
                         if (($nextEvent['ActionID'] == 0) && ($nextEvent['PreviousActionID'] == 0) && ($nextEvent['NextActionID'] == 0)) {
-                            $checkTime = mktime(0, 0, 0, intval(date('m', $nextEvent['StartSysTime'])), intval(date('d', $nextEvent['StartSysTime'])) + 1, intval(date('Y', $nextEvent['StartSysTime'])));
-                        } elseif (($nextEvent['NextActionID'] == 0) && ($nextEvent['PreviousActionID'] == 0)) {
                             $checkTime = mktime(0, 0, 0, intval(date('m', $nextEvent['StartSysTime'])), intval(date('d', $nextEvent['StartSysTime'])) + 1, intval(date('Y', $nextEvent['StartSysTime'])));
                         } else {
                             $checkTime = $nextEvent['EndSysTime'];

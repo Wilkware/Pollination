@@ -1,13 +1,15 @@
-# Pollenflug
+# 🌿 Pollenflug (Pollination)
 
 [![Version](https://img.shields.io/badge/Symcon-PHP--Modul-red.svg?style=flat-square)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
-[![Product](https://img.shields.io/badge/Symcon%20Version-6.4-blue.svg?style=flat-square)](https://www.symcon.de/produkt/)
+[![Product](https://img.shields.io/badge/Symcon%20Version-8.1-blue.svg?style=flat-square)](https://www.symcon.de/produkt/)
 [![Version](https://img.shields.io/badge/Modul%20Version-4.0.20260309-orange.svg?style=flat-square)](https://github.com/Wilkware/Pollination)
 [![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg?style=flat-square)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 [![Actions](https://img.shields.io/github/actions/workflow/status/wilkware/Pollination/ci.yml?branch=main&label=CI&style=flat-square)](https://github.com/Wilkware/Pollination/actions)
 
 Das Modul nutzt den von Deutschen Wetterdienst (DWD) bereitgestellten Pollenflug-Gefahrenindex (opendata.dwd.de) zur graphischen Aufbereitung und
 erzeugt über alle Meldungen einen kurzen Tageshinweis für die entsprechenden Gefahren.
+
+![Module-Visu](imgs/pollination.png) 
 
 ## Inhaltverzeichnis
 
