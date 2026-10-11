@@ -140,26 +140,8 @@ class PollenCount extends IPSModuleStrict
      * @var array<string,mixed> Hint presentation for the visualization
      */
     private const POLLEN_PRESENTATION_HINT = [
-        'PRESENTATION'        => VARIABLE_PRESENTATION_VALUE_PRESENTATION,
-        'DISPLAY_TYPE'        => 0,
-        'USAGE_TYPE'          => 0,
-        'THOUSANDS_SEPARATOR' => '',
-        'SHOW_PREVIEW'        => true,
-        'SUFFIX'              => '',
-        'COLOR'               => -1,
-        'MAX'                 => 100,
-        'MULTILINE'           => false,
-        'DECIMAL_SEPARATOR'   => 'Client',
-        'PERCENTAGE'          => false,
-        'DIGITS'              => 2,
-        'INTERVALS'           => '[]',
-        'ICON'                => 'message-dots',
-        'INTERVALS_ACTIVE'    => false,
-        'PREVIEW_STYLE'       => 1,
-        'MIN'                 => 0,
-        'OPTIONS'             => '[]',
-        'CONTENT_COLOR'       => -1,
-        'PREFIX'              => '',
+        'ICON'         => 'message-dots',
+        'PRESENTATION' => VARIABLE_PRESENTATION_VALUE_PRESENTATION,
     ];
 
     // -------------------------------------------------------------------------
@@ -167,7 +149,7 @@ class PollenCount extends IPSModuleStrict
     // -------------------------------------------------------------------------
 
     /**
-     * In contrast to Construct, this function is called only once when creating the instance and starting IP-Symcon.
+     * In contrast to Construct, this function is called only once when creating the instance and starting Symcon.
      * Therefore, status variables and module properties which the module requires permanently should be created here.
      *
      * @return void
@@ -217,7 +199,7 @@ class PollenCount extends IPSModuleStrict
 
     /**
      * This function is called when deleting the instance during operation and when updating via "Module Control".
-     * The function is not called when exiting IP-Symcon.
+     * The function is not called when exiting Symcon.
      *
      * @return void
      */

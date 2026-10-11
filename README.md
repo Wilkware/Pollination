@@ -1,5 +1,6 @@
 # 🌿 Pollenflug (Pollination)
 
+[![Home](https://img.shields.io/badge/Home-wilkware.de-0b1830.svg?style=flat-square)](https://wilkware.de/module/pollenflug/)
 [![Version](https://img.shields.io/badge/Symcon-PHP--Modul-red.svg?style=flat-square)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
 [![Product](https://img.shields.io/badge/Symcon%20Version-8.1-blue.svg?style=flat-square)](https://www.symcon.de/produkt/)
 [![Version](https://img.shields.io/badge/Modul%20Version-4.0.20260309-orange.svg?style=flat-square)](https://github.com/Wilkware/Pollination)
@@ -16,11 +17,12 @@ erzeugt über alle Meldungen einen kurzen Tageshinweis für die entsprechenden G
 1. [Funktionsumfang](#user-content-1-funktionsumfang)
 2. [Voraussetzungen](#user-content-2-voraussetzungen)
 3. [Installation](#user-content-3-installation)
-4. [Einrichten der Instanzen in IP-Symcon](#user-content-4-einrichten-der-instanzen-in-ip-symcon)
+4. [Einrichtung](#user-content-4-einrichtung)
 5. [Statusvariablen](#user-content-5-statusvariablen)
-6. [Visualisierung](#user-content-6-visualisierung)
-7. [PHP-Befehlsreferenz](#user-content-7-php-befehlsreferenz)
-8. [Versionshistorie](#user-content-8-versionshistorie)
+6. [Darstellungen](#user-content-6-darstellungen)
+7. [Visualisierung](#user-content-7-visualisierung)
+8. [Befehlsreferenz](#user-content-8-befehlsreferenz)
+9. [Versionshistorie](#user-content-9-versionshistorie)
 
 ### 1. Funktionsumfang
 
@@ -32,23 +34,23 @@ Dieses Modul ruft den Pollenflug-Gefahrenindex von DWD ab und stellt ihn textuel
 * Auswahl der darzustellenden Gefahren/Pollenarten
 * Meldungen an Visualisierung und/oder Meldungsdashboard ab einen bestimmten Gefahrenlevel
 * Möglichleit der Medieneinbindung von Pollenflugkalender(n) (www.pollenstiftung.de)
-* Tägliche Aktualisierung der Daten (siehe Einrichten der Instanz)
+* Tägliche Aktualisierung der Daten (siehe Einrichtung)
 
-Der Pollen-Gefahrenindex kann auch über die Methode [POLLEN_IndexInfo](#7-php-befehlsreferenz) als JSON abgerufen werden.
+Der Pollen-Gefahrenindex kann auch über die Methode [POLLEN_IndexInfo](#user-content-8-befehlsreferenz) als JSON abgerufen werden.
 
 ### 2. Voraussetzungen
 
-* IP-Symcon ab Version 8.1
+* Symcon ab Version 8.1
 
 ### 3. Installation
 
-* Über den Modul Store das Modul _Pollenflug_ bzw. _Pollination_ installieren.
-* Alternativ Über das Modul-Control folgende URL hinzufügen.  
+* Über den Modul Store das Modul _Pollenflug_ installieren.
+* Alternativ über das Modul Control folgende URL hinzufügen.  
 `https://github.com/Wilkware/Pollination` oder `git://github.com/Wilkware/Pollination.git`
 
-### 4. Einrichten der Instanzen in IP-Symcon
+### 4. Einrichtung
 
-* Unter "Instanz hinzufügen" ist das _Pollenflug_-Modul (_Pollination_) unter dem Hersteller '(Geräte)' aufgeführt.
+* Unter 'Instanz hinzufügen' ist das _Pollenflug_-Modul unter dem Hersteller '(Geräte)' aufgeführt.
 
 __Konfigurationsseite__:
 
@@ -83,10 +85,10 @@ Name                               | Beschreibung
 ---------------------------------- | ---------------------------------
 Meldung an Anzeige senden          | Auswahl ob Eintrag in die Meldungsverwaltung erfolgen soll oder nicht (Ja/Nein)
 Ab Stufe                           | Auswahl ab welcher Stufe (1-4) die Nachricht erfolgen soll
-Nachricht an Visualiserung senden  | Auswahl ob Push-Nachricht gesendet werden soll oder nicht (Ja/Nein)
+Nachricht an Visualisierung senden | Auswahl ob Push-Nachricht gesendet werden soll oder nicht (Ja/Nein)
 Ab Stufe                           | Auswahl ab welcher Stufe (1-4) die Meldung erfolgen soll
 Visualisierungs-Instanz            | ID der Visualisierung, an welches die Push-Nachrichten für Geburts-, Hochzeits- und Todestage gesendet werden soll (WebFront oder TileVisu Instanz)
-Meldsungsskript                    | Skript ID des Meldungsverwaltungsskripts, weiterführende Infos im Forum: [Meldungsanzeige im Webfront](https://community.symcon.de/t/meldungsanzeige-im-webfront/23473)
+Meldungsskript                     | Skript ID des Meldungsverwaltungsskripts, weiterführende Infos im Forum: [Meldungsanzeige im Webfront](https://community.symcon.de/t/meldungsanzeige-im-webfront/23473)
 
 
 > ⚙️ Erweiterte Einstellungen ...
@@ -103,23 +105,38 @@ AKTUALISIEREN  | Ermittelt für das aktuelle Datum den Gefahrenindex (Update)
 
 ### 5. Statusvariablen
 
-Die Statusvariablen werden je nach Einstellung automatisch angelegt. Das Löschen einzelner kann zu Fehlfunktionen führen.
+Die Statusvariablen werden automatisch angelegt. Das Löschen einzelner kann zu Fehlfunktionen führen.  
+Die Variable 'Tageshinweis' wird nur angelegt, wenn dies in den erweiterten Einstellungen aktiviert ist.
 
-Name                   | Typ       | Beschreibung
----------------------- | --------- | ----------------
-Letzte Aktualisierung  | Integer   | von DWD gelieferter Zeitstempel der letzten Aktualisierung
-Nächste Aktualisierung | Integer   | von DWD gelieferter Zeitstempel für die nächste Aktualisierung
-Bundesland             | Integer   | Bundesland für welchen man die den Gefahrenindex haben möchte
-Region                 | Integer   | Teilregion innerhalb des Bundeslandes
-Tage                   | Integer   | Anzahl der vorhergesagten Tage
-Tageshinweis           | String    | Textuelle Zusammenfassung der Vorhersage
-{Pollenflugkalender}   | Medien    | n-Bild(er) der aktivieren Pollenflugkalender (Gesamtdeutsch, Nord, West, Ost, Süd)
+Name                   | Typ     | Beschreibung
+---------------------- | ------- | ------------------------------
+Letzte Aktualisierung  | Integer | von DWD gelieferter Zeitstempel der letzten Aktualisierung
+Nächste Aktualisierung | Integer | von DWD gelieferter Zeitstempel für die nächste Aktualisierung
+Bundesland             | Integer | Bundesland für welchen man die den Gefahrenindex haben möchte
+Region                 | Integer | Teilregion innerhalb des Bundeslandes
+Tage                   | Integer | Anzahl der vorhergesagten Tage
+Tageshinweis           | String  | Textuelle Zusammenfassung der Vorhersage
 
-### 6. Visualisierung
+_Hinweis:_ Zusätzlich werden für die aktivierten Pollenflugkalender (Gesamtdeutsch, Nord, West, Ost, Süd) entsprechende Bilder (Medien) angelegt.
+
+### 6. Darstellungen
+
+Die Darstellungen werden direkt an den Statusvariablen hinterlegt, es werden keine Profile angelegt.
+
+Variable               | Darstellung   | Werte
+---------------------- | ------------- | ------------------------------
+Letzte Aktualisierung  | Datum/Uhrzeit | Datum (mit Wochentag und Monatsname) und Uhrzeit
+Nächste Aktualisierung | Datum/Uhrzeit | Datum (mit Wochentag und Monatsname) und Uhrzeit
+Bundesland             | Aufzählung    | 12 Bundesländer bzw. Ländergruppen des DWD (z.B. Schleswig-Holstein und Hamburg, Bayern)
+Region                 | Aufzählung    | Teilregionen des gewählten Bundeslandes (wird beim Wechsel des Bundeslandes angepasst)
+Tage                   | Schieberegler | 1 – 3 (Schrittweite 1)
+Tageshinweis           | Wertanzeige   | Text
+
+### 7. Visualisierung
 
 Man kann die gesamte Instanz direkt in die Visualisierung verlinken.
 
-### 7. PHP-Befehlsreferenz
+### 8. Befehlsreferenz
 
 ```php
 void POLLEN_Update(int $InstanzID):
@@ -153,7 +170,7 @@ __Beispiel__: `POLLEN_IndexInfo(12345);`
 > "last": 1614420000  
 > }  
 
-### 8. Versionshistorie
+### 9. Versionshistorie
 
 v4.0.20260309
 
@@ -201,7 +218,7 @@ Vielen Dank für die hervorragende und tolle Arbeit! Thanks!
 
 ## Entwickler
 
-Seit nunmehr über 10 Jahren fasziniert mich das Thema Haussteuerung. In den letzten Jahren betätige ich mich auch intensiv in der IP-Symcon Community und steuere dort verschiedenste Skript und Module bei. Ihr findet mich dort unter dem Namen @pitti ;-)
+Seit nunmehr über 10 Jahren fasziniert mich das Thema Haussteuerung. In den letzten Jahren betätige ich mich auch intensiv in der Symcon Community und steuere dort verschiedenste Skript und Module bei. Ihr findet mich dort unter dem Namen @pitti ;-)
 
 [![GitHub](https://img.shields.io/badge/GitHub-@wilkware-181717.svg?style=for-the-badge&logo=github)](https://wilkware.github.io/)
 
