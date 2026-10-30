@@ -135,7 +135,7 @@ trait EventHelper
 
         $eid = IPS_GetEvent($id);
         if ($eid['EventType'] != EVENTTYPE_SCHEDULE) {
-            $this->SendDebug('GetWeeklyScheduleInfo', 'Bei der ID= ' . $id . ' handelt es sich um keinen Wochenplan !', 0);
+            $this->SendDebug('GetWeeklyScheduleInfo', 'ID ' . $id . ' is not a weekly schedule!', 0);
             return $data;
         }
 
@@ -148,9 +148,9 @@ trait EventHelper
         $dayEventFound = false;
         $dayFound = false;
 
-        //Durch alle Gruppen gehen
+        //Iterate over all groups
         foreach ($eid['ScheduleGroups'] as $g) {
-            //pruefen ob Gruppe fuer Zeitpunkt zustaendig
+            //Check whether the group is responsible for the point in time
             if (($g['Days'] & pow(2, date('N', $time) - 1)) > 0) {
                 $dayFound = true;
                 $startPointFound = false;
@@ -158,7 +158,7 @@ trait EventHelper
                 $endPointFound = false;
                 $data['StartSysTime'] = mktime(0, 0, 0, intval(date('m', $time)), intval(date('d', $time)), intval(date('Y', $time)));
                 $searchTimeActDay = date('H', $time) * 3600 + date('i', $time) * 60 + date('s', $time);
-                //Aktuellen Schaltpunkt suchen --> Wir nutzen die Eigenschaft, dass die Schaltpunkte immer aufsteigend sortiert sind.
+                //Search current switch point --> the switch points are always sorted ascending.
                 foreach ($g['Points'] as $p) {
                     $StartTimeActDaySlot = $p['Start']['Hour'] * 3600 + $p['Start']['Minute'] * 60 + $p['Start']['Second'];
                     $dayEventFound = true;
@@ -184,16 +184,16 @@ trait EventHelper
                         }
                     }
                 }
-                break; //Sobald wir unseren Tag gefunden haben, können wir die Schleife abbrechen. Jeder Tag darf nur in genau einer Gruppe sein.
+                break; //Stop once our day is found. Each day belongs to exactly one group.
             }
         }
 
-        //wenn kein Tag gefunden wird ==> Tag ist ausgeblendet !!
+        //If no day is found ==> the day is hidden!
         if ($dayFound == false) {
             if ($checkonly == false) {
                 for ($i = 0; $i <= 7; $i++) {
                     foreach ($eid['ScheduleGroups'] as $g) {
-                        //pruefen ob Gruppe fuer Zeitpunkt zustaendig
+                        //Check whether the group is responsible for the point in time
                         if (($g['Days'] & pow(2, date('N', $time) - 1 - $i)) > 0) {
                             $dayFound = true;
                             break 2;
@@ -205,7 +205,7 @@ trait EventHelper
 
             for ($i = 0; $i <= 6; $i++) {
                 foreach ($eid['ScheduleGroups'] as $g) {
-                    //pruefen ob Gruppe fuer Zeitpunkt zustaendig
+                    //Check whether the group is responsible for the point in time
                     if (($g['Days'] & pow(2, date('N', $time) - 1 + $i)) > 0) {
                         $dayFound = true;
                         break 2;
@@ -223,7 +223,7 @@ trait EventHelper
         }
 
         if ($checkonly == false) {
-            //Startpunkt wurde zwar gefunden aber die ActionID ist 0 --> vorigen Schaltpunkt suchen
+            //Start point found but the ActionID is 0 --> search previous switch point
             if (($startPointFound == true) && ($data['ActionID'] == 0)) {
                 do {
                     $prevEvent = $this->GetWeeklyScheduleInfo($id, $data['StartSysTime'] - 1, true);
@@ -239,7 +239,7 @@ trait EventHelper
                     }
                 } while (($data['ActionID'] == 0) && ($prevEvent['StartSysTime'] >= ($data['CheckSysTime'] - 86400 * 7)));
 
-                //Jetzt auch nochmals checken ob sich nicht auch der vorherige zu 0 veraendert hat
+                //Check again whether the previous one has also changed to 0
                 if ($data['PreviousActionID'] == 0) {
                     $checkTime = $data['StartSysTime'];
 
@@ -251,11 +251,11 @@ trait EventHelper
                             $data['PreviousActionID'] = $prevEvent['ActionID'];
                             $dayEventFound = true;
                         }
-                    } while (($data['PreviousActionID'] == 0) && ($prevEvent['StartSysTime'] >= ($data['CheckSysTime'] - 86400 * 14))); //hier geht auch 7
+                    } while (($data['PreviousActionID'] == 0) && ($prevEvent['StartSysTime'] >= ($data['CheckSysTime'] - 86400 * 14))); //7 works here as well
                 }
             }
 
-            //Startpunkt liegt an einen der Vortage !!
+            //Start point is on one of the previous days!
             if ($startPointFound == false) {
                 do {
                     $prevEvent = $this->GetWeeklyScheduleInfo($id, $data['StartSysTime'] - 1, true);
@@ -281,7 +281,7 @@ trait EventHelper
                     }
                 } while ((($data['ActionID'] == 0) || ($data['ActionID'] == $prevEvent['PreviousActionID'])) && ($prevEvent['StartSysTime'] >= ($data['CheckSysTime'] - 86400 * 14)));
 
-                //Checken ob nicht doch der vorherige Schaltpunkt jetzt 0 ist
+                //Check whether the previous switch point is now 0
                 if ($data['PreviousActionID'] == 0) {
                     $checkTime = $data['StartSysTime'];
 
@@ -301,7 +301,7 @@ trait EventHelper
                 }
             }
 
-            //Vorheriger Schaltpunkt hat selben Status wie ActionID --> somit vorherigen Schaltpunkt fuer VORGAENGER suchen
+            //Previous switch point has the same state as ActionID --> search previous switch point of the PREDECESSOR
             if ($data['ActionID'] == $data['PreviousActionID']) {
                 $checkTime = $data['StartSysTime'];
 
@@ -322,7 +322,7 @@ trait EventHelper
                 } while (($data['PreviousActionID'] == $data['ActionID']) && ($prevEvent['StartSysTime'] >= ($data['CheckSysTime'] - 86400 * 7)));
             }
 
-            //Endpunkt wurde zwar gefunden aber der naechste Schaltpunkt ist 0
+            //End point found but the next switch point is 0
             if (($endPointFound == true) && ($data['NextActionID'] == 0)) {
                 $checkTime = $data['EndSysTime'];
 
@@ -343,7 +343,7 @@ trait EventHelper
                 } while (($data['NextActionID'] == 0) && ($data['EndSysTime'] <= ($data['CheckSysTime'] + 86400 * 7)));
             }
 
-            //Endpunkt liegt an einen der Folgetage !!
+            //End point is on one of the following days!
             if ($endPointFound == false) {
                 if (($data['StartSysTime'] + 86400 * 6) < $data['CheckSysTime']) {
                     $data['CheckSysTime'] = ($data['StartSysTime'] + 86400 * 6);
@@ -367,12 +367,12 @@ trait EventHelper
                     }
                 } while ((($data['ActionID'] == $nextEvent['ActionID']) || ($data['NextActionID'] == $nextEvent['NextActionID'])) && ($data['EndSysTime'] <= ($data['CheckSysTime'] + 86400 * 7)));
 
-                //Wenn es kein Abloesezeitpunkt (nur ein Event im Wochenplan) gibt !!
+                //If there is no change time (only one event in the weekly schedule)!
                 if (($data['EndSysTime'] >= ($data['CheckSysTime'] + 86400 * 7)) && ($data['NextActionID'] == 0)) {
                     $data['NextActionID'] = $data['ActionID'];
                 }
 
-                //Wenn naechster Schaltpunkt = 0 ist --> Folgeevent suchen !!
+                //If the next switch point is 0 --> search following event!
                 if (($data['NextActionID'] == 0) && ($data['ActionID'] != 0) && ($data['PreviousActionID'] != 0)) {
                     $checkTime = mktime(0, 0, 0, intval(date('m', $data['CheckSysTime'])), intval(date('d', $data['CheckSysTime'])) + 1, intval(date('Y', $data['CheckSysTime'])));
 
@@ -393,7 +393,7 @@ trait EventHelper
                     } while (($data['NextActionID'] == 0) && ($data['EndSysTime'] <= ($data['CheckSysTime'] + 86400 * 7)));
                 }
 
-                //Wenn alle 3 Schaltpunkte gleich sind, dann Ueberpruefungszeitpunkt zurueckliefern (Kein oder nur EIN Event im Wochenplan)
+                //If all 3 switch points are equal, return the check time (no or only ONE event in the weekly schedule)
                 if (($data['ActionID'] == $data['PreviousActionID']) && ($data['ActionID'] == $data['NextActionID'])) {
                     $data['StartSysTime'] = $time;
                     $data['EndSysTime'] = $time;
